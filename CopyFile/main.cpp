@@ -5,7 +5,7 @@
 #include <fstream>
 #include <optional>
 #include <string>
-#include "ConsoleApplication1.h"
+#include "main.h"
 
 struct Args
 {
@@ -72,7 +72,9 @@ int CopyFile(std::optional<Args> args)
 	{
 		std::cout << "Failed to write data to output file\n";
 		return 1;
-	};
+	}
+
+	return 0;
 }
 
 int main(int argc, char * argv[])

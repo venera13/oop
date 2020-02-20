@@ -22,7 +22,7 @@ fc notEmpty.txt "%TEMP%\tests\NonEmptyOutput.txt" > nul || goto err
 echo test 3 passed
 
 REM  Copy missing file should fail
-%MyProgram% none.txt "%TEMP%\output.txt" && goto err
+%MyProgram% none.txt "%TEMP%\output.txt" > nul && goto err
 echo test 4 passed
 
 REM  If output file is not specified, program must fail
