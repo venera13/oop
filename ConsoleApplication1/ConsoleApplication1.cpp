@@ -40,15 +40,8 @@ void CopyStreams(std::ifstream &input, std::ofstream &output)
 	}
 }
 
-int main(int argc, char * argv[])
+int CopyFile(std::optional<Args> args)
 {
-	auto args = ParseArg(argc, argv);
-	if(!args)
-	{
-		std::cout << "Invalid arguments count\n";
-		std::cout << "Usage: CopyFile.exe <input file name> <output file name>\n";
-		return 1;
-	}
 	//Открываем входной файл
 	std::ifstream input;
 	input.open(args->inputFileName);
@@ -57,7 +50,7 @@ int main(int argc, char * argv[])
 		std::cout << "Failed to open '" << args->inputFileName << "' for reading\n";
 		return 1;
 	}
-	
+
 	//Открываем выходной файл
 	std::ofstream output;
 	output.open(args->outputFileName);
@@ -69,16 +62,32 @@ int main(int argc, char * argv[])
 
 	CopyStreams(input, output);
 
-	if(input.bad())
+	if (input.bad())
 	{
 		std::cout << "Failed to read data to input file\n";
 		return 1;
 	}
 
-	if(!output.flush())
+	if (!output.flush())
 	{
 		std::cout << "Failed to write data to output file\n";
 		return 1;
 	};
+}
+
+int main(int argc, char * argv[])
+{
+	auto args = ParseArg(argc, argv);
+	if(!args)
+	{
+		std::cout << "Invalid arguments count\n";
+		std::cout << "Usage: CopyFile.exe <input file name> <output file name>\n";
+		return 1;
+	}
+
+	if (CopyFile(args) == 1)
+	{
+		return 1;
+	}
 	return 0;
 }
