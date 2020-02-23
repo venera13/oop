@@ -1,3 +1,3 @@
 #pragma once
 
-void CopyStreams(std::ifstream &input, std::ofstream &output);
+void CopyStreams(std::istream &input, std::ostream &output);
