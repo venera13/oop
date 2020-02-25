@@ -29,7 +29,6 @@ std::optional<Args> ParseArg(int argc, char * argv[])
 
 void CopyStreams(std::istream& input, std::ostream& output)
 {
-	
 	char ch;
 	while (input.get(ch))
 	{
