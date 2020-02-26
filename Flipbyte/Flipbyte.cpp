@@ -1,29 +1,14 @@
 ﻿#include <iostream>
+#include <optional>
 #include <string>
 
 bool IsIntegerValue(double number)
 {
-    if (number)
+    if (number && (number - (int)number == 0))
     {
-        return number - (int)number == 0;
+        return true;
     }
-    else
-    {
-        return false;
-    }
-    return true;
-}
-
-std::string ToBinary(int number)
-{
-    std::string result;
-    int bin = 0;
-    while (number)
-    {
-        bin = bin * 10 + (number & 1);// ? 1 : 0;
-        number >>= 1;
-    }
-    return result;
+    return false;
 }
 
 bool IsDecimalNumeralSystem(double &number)
@@ -31,28 +16,43 @@ bool IsDecimalNumeralSystem(double &number)
     if (IsIntegerValue(number))
     {
         number = (int)number;
+        if (number >= 0 && number <= 255)
+        {
+            return true;
+        }
     }
-    if (number < 0 || number > 255)
-    {
-        return false;
-    }
-    return true;
+    return false;
 }
 
+using namespace std;
 int main()
 {
     double number;
     std::cout << "Enter a integer number: ";
-    if (std::cin.get())
+    std::cin >> number;
+    if (!number)
     {
+        std::cout << "This number is NOT INTEGER!\n";
         return 1;
     }
-    std::cin >> number;
+    int numberToBinary[8] = {};
   
     if (IsDecimalNumeralSystem(number))
     {
-       std::cout << "This number is in the decimal numeral system.\n";
-       ToBinary(number);
+        int intNumber = (int)number;
+        for (int i = 0; i < 8; i++)
+        {
+            numberToBinary[i] = (intNumber >> i) & 1;
+        }
+        int result = 0;
+        int coef = 1;
+        for (int i = 7; i >= 0; i--)
+        {
+            int numberSum = numberToBinary[i] * coef;
+            result += numberSum;
+            coef *= 2;
+        }
+        std::cout << result << "\n";
     }
     else
     {
@@ -61,6 +61,5 @@ int main()
     return 0;
 }
 
-//перевод в двоичную систему
 //отзеркаливание полученного числа
 //перевод в десятичную систему
