@@ -1,12 +1,39 @@
 ﻿#include <iostream>
 #include <optional>
 #include <string>
+#include <sstream>
 
 const int numberOfBits = 8;
 
+struct Args
+{
+    double number;
+};
+
+std::optional<Args> ParseArg(int argc, char* argv[])
+{
+    if (argc != 2)
+    {
+        std::cout << "Invalid arguments count\n";
+        std::cout << "Usage: Filebyte.exe <number is decimal numeric system>\n";
+        return std::nullopt;
+    }
+
+    std::stringstream ss;
+    ss << argv[1];
+
+    Args args;
+    if (!(ss >> args.number))
+    {
+        std::cout << "This is not a number!\n";
+        return std::nullopt;
+    }
+    return args;
+}
+
 bool IsIntegerValue(double number)
 {
-    if ((number || number == 0) && (number - (int)number == 0))
+    if (number - (int)number == 0)
     {
         return true;
     }
@@ -47,21 +74,13 @@ int GetDecimalNumberNumber(int *arr)
     return result;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    double number;
-    std::cout << "Enter a integer number: ";
-    std::cin >> number;
-    if (!number && number != 0)
-    {
-        std::cout << "This number is not an integer!\n";
-        return 1;
-    }
-    
-    if (IsDecimalNumeralSystem(number))
+    auto args = ParseArg(argc, argv);
+    if (IsDecimalNumeralSystem(args->number) && args)
     {
         int numberToBinary[numberOfBits] = {};
-        int intNumber = (int)number;
+        int intNumber = (int)args->number;
 
         GetBinaryNumber(intNumber, numberToBinary);
         int result = GetDecimalNumberNumber(numberToBinary);
