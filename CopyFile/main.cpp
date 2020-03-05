@@ -39,7 +39,7 @@ void CopyStreams(std::istream& input, std::ostream& output)
 	}
 }
 
-bool CopyFile(std::string inputFileName, std::string outputFileName)
+bool CopyFile(const std::string& inputFileName, const std::string& outputFileName)
 {
 	//Открываем входной файл
 	std::ifstream input;
