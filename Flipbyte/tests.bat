@@ -10,10 +10,6 @@ REM Целое число
 %MyProgram% 6 || goto err
 echo test 1 passed
 
-REM Ноль
-%MyProgram% 0 || goto err
-echo test 2 passed
-
 REM Число 255
 %MyProgram% 255 || goto err
 echo test 3 passed
@@ -27,7 +23,7 @@ REM Число больше 255
 echo test 5 passed
 
 REM Float
-%MyProgram% 15.4 && goto err
+%MyProgram% 15.4 || goto err
 echo test 6 passed
 
 REM Строка

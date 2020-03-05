@@ -3,11 +3,9 @@
 #include <string>
 #include <sstream>
 
-const int numberOfBits = 8;
-
 struct Arg
 {
-    double number;
+    uint8_t byte;
 };
 
 std::optional<Arg> ParseArg(int argc, char* argv[])
@@ -18,12 +16,13 @@ std::optional<Arg> ParseArg(int argc, char* argv[])
         std::cout << "Usage: Filebyte.exe <number is decimal numeric system>\n";
         return std::nullopt;
     }
-
-    std::stringstream ss;
-    ss << argv[1];
-
+    if (std::stoi(argv[1]) < std::numeric_limits<uint8_t>::min() || std::stoi(argv[1]) > std::numeric_limits<uint8_t>::max())
+    {
+        return std::nullopt;
+    }
     Arg arg;
-    if (!(ss >> arg.number))
+    arg.byte = std::stoi(argv[1]);
+    if (!(arg.byte))
     {
         std::cout << "This is not a number!\n";
         return std::nullopt;
@@ -31,65 +30,21 @@ std::optional<Arg> ParseArg(int argc, char* argv[])
     return arg;
 }
 
-bool IsIntegerValue(double number)
+void FlipType(uint8_t& byte)
 {
-    if (number - (int)number == 0)
-    {
-        return true;
-    }
-    return false;
-}
-
-bool IsDecimalNumeralSystem(double number)
-{
-    if (IsIntegerValue(number))
-    {
-        number = (int)number;
-        if (number >= 0 && number <= 255)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-void GetBinaryNumber(int number, int *arr)
-{
-    for (int i = 0; i < numberOfBits; i++)
-    {
-        arr[i] = (number >> i) & 1;
-    }
-}
-
-int GetDecimalNumberNumber(int *arr)
-{
-    int result = 0;
-    int coef = 1;
-    for (int i = numberOfBits - 1; i >= 0; i--)
-    {
-        int numberSum = arr[i] * coef;
-        result += numberSum;
-        coef *= 2;
-    }
-    return result;
+    byte = (byte & 0x55) << 1 | (byte >> 1) & 0x55;
+    byte = (byte & 0x33) << 2 | (byte >> 2) & 0x33;
+    byte = (byte & 0x0F) << 4 | (byte >> 4) & 0x0F;
 }
 
 int main(int argc, char* argv[])
 {
     auto arg = ParseArg(argc, argv);
-    if (IsDecimalNumeralSystem(arg->number) && arg)
+    if (!arg)
     {
-        int numberToBinary[numberOfBits] = {};
-        int intNumber = (int)arg->number;
-
-        GetBinaryNumber(intNumber, numberToBinary);
-        int result = GetDecimalNumberNumber(numberToBinary);
-        std::cout << result << "\n";
-    }
-    else
-    {
-        std::cout << "This number is not in the decimal numeral system.\n";
         return 1;
     }
+    FlipType(arg->byte);
+    std::cout << static_cast<int>(arg->byte) << "\n";
     return 0;
 }
