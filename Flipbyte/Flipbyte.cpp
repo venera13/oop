@@ -5,12 +5,12 @@
 
 const int numberOfBits = 8;
 
-struct Args
+struct Arg
 {
     double number;
 };
 
-std::optional<Args> ParseArg(int argc, char* argv[])
+std::optional<Arg> ParseArg(int argc, char* argv[])
 {
     if (argc != 2)
     {
@@ -22,13 +22,13 @@ std::optional<Args> ParseArg(int argc, char* argv[])
     std::stringstream ss;
     ss << argv[1];
 
-    Args args;
-    if (!(ss >> args.number))
+    Arg arg;
+    if (!(ss >> arg.number))
     {
         std::cout << "This is not a number!\n";
         return std::nullopt;
     }
-    return args;
+    return arg;
 }
 
 bool IsIntegerValue(double number)
@@ -76,11 +76,11 @@ int GetDecimalNumberNumber(int *arr)
 
 int main(int argc, char* argv[])
 {
-    auto args = ParseArg(argc, argv);
-    if (IsDecimalNumeralSystem(args->number) && args)
+    auto arg = ParseArg(argc, argv);
+    if (IsDecimalNumeralSystem(arg->number) && arg)
     {
         int numberToBinary[numberOfBits] = {};
-        int intNumber = (int)args->number;
+        int intNumber = (int)arg->number;
 
         GetBinaryNumber(intNumber, numberToBinary);
         int result = GetDecimalNumberNumber(numberToBinary);
