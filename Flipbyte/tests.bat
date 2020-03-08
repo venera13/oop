@@ -10,6 +10,10 @@ REM Целое число
 %MyProgram% 6 || goto err
 echo test 1 passed
 
+REM Число ноль
+%MyProgram% 0 && goto err
+echo test 2 passed
+
 REM Число 255
 %MyProgram% 255 || goto err
 echo test 3 passed

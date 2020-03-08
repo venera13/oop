@@ -24,4 +24,7 @@
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="test_output.txt" />
+  </ItemGroup>
 </Project>

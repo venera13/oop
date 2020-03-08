@@ -22,7 +22,7 @@ std::optional<Arg> ParseArg(int argc, char* argv[])
     }
     Arg arg;
     arg.byte = std::stoi(argv[1]);
-    if (!(arg.byte))
+    if (!arg.byte)
     {
         std::cout << "This is not a number!\n";
         return std::nullopt;
