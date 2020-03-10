@@ -1,5 +1,7 @@
 ﻿#include <iostream>
+#include <fstream>
 #include <string>
+#include <optional>
 
 typedef double Matrix3x3[3][3];
 
@@ -9,6 +11,24 @@ template<typename T, std::size_t N>
 constexpr std::size_t SizeOfArray(T(&)[N])
 {
 	return N;
+}
+
+struct Args
+{
+	std::string inputFileName;
+};
+
+std::optional<Args> ParseArg(int argc, char* argv[])
+{
+	if (argc != 2)
+	{
+		std::cout << "Invalid arguments count\n";
+		std::cout << "Usage: Invert.exe <input file name>\n";
+		return std::nullopt;
+	}
+	Args args;
+	args.inputFileName = argv[1];
+	return args;
 }
 
 void InitUnixMatrix(Matrix3x3 matrix, int matrixSize)
@@ -29,8 +49,31 @@ void InitUnixMatrix(Matrix3x3 matrix, int matrixSize)
 	}
 }
 
+bool GetInputMatrix(const std::string& inputFileName, Matrix3x3 matrix)
+{
+	cout << inputFileName << "\n";
+	std::ifstream input;
+	input.open(inputFileName);
+	if (!input.is_open())
+	{
+		std::cout << "Failed to open '" << inputFileName << "' for reading\n";
+		return false;
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			input >> matrix[i][j];
+		}
+	}
+	
+	return true;
+}
+
 void PrintoutMatrix(Matrix3x3 matrix, int matrixSize)
 {
+	cout.precision(3);
 	for (int i = 0; i < matrixSize; ++i)
 	{
 		for (int j = 0; j < matrixSize; ++j)
@@ -83,18 +126,26 @@ void InvertMatrix3x3(Matrix3x3 matrix, Matrix3x3 invertMatrix, int matrixSize)
 	}
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-	Matrix3x3 matrix = {
-		{1.0, 2.0, -1.0},
-		{3.0, 0, 2.0},
-		{4.0, -2.0, 5.0}
+	auto args = ParseArg(argc, argv);
+	if (!args)
+	{
+		std::cout << "Invalid arguments count\n";
+		std::cout << "Usage: Invert.exe <input file name>\n";
+		return 1;
+	}
+	Matrix3x3 matrix = {};
+	
+	if (!GetInputMatrix(args->inputFileName, matrix)) 
+	{
+		return 1;
 	};
+
 	Matrix3x3 invertMatrix = {};
 	int arraySize = SizeOfArray(matrix);
-	cout << "size " << arraySize << "\n";
 
-	InvertMatrix3x3(matrix, invertMatrix, 3);
-	PrintoutMatrix(matrix, 3);
-	return 1;
+	InvertMatrix3x3(matrix, invertMatrix, arraySize);
+	PrintoutMatrix(invertMatrix, arraySize);
+	return 0;
 }
