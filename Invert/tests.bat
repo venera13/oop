@@ -6,9 +6,25 @@ if %MyProgram%=="" (
 	exit /B 1
 )
 
-REM  Matrix
-%MyProgram% matrix.txt || goto err
+REM Empty file
+%MyProgram% empty.txt && goto err
 echo test 1 passed
+
+REM Null matrix
+%MyProgram% not_empty.txt || goto err
+echo test 2 passed
+
+REM  Copy missing file should fail
+%MyProgram% none.txt && goto err
+echo test 3 passed
+
+REM Matrix
+%MyProgram% matrix.txt || goto err
+echo test 4 passed
+
+REM Matrix
+%MyProgram% not_empty.txt || goto err
+echo test 4 passed
 
 REM Тесты завершились успешно
 echo All tests passed successfuly

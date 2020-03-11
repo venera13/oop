@@ -3,9 +3,9 @@
 #include <string>
 #include <optional>
 
-typedef double Matrix3x3[3][3];
-
 using namespace std;
+
+typedef double Matrix3x3[3][3];
 
 template<typename T, std::size_t N>
 constexpr std::size_t SizeOfArray(T(&)[N])
@@ -49,9 +49,8 @@ void InitUnixMatrix(Matrix3x3 matrix, int matrixSize)
 	}
 }
 
-bool GetInputMatrix(const std::string& inputFileName, Matrix3x3 matrix)
+bool GetInputMatrix(const std::string& inputFileName, Matrix3x3 matrix, int matrixSize)
 {
-	cout << inputFileName << "\n";
 	std::ifstream input;
 	input.open(inputFileName);
 	if (!input.is_open())
@@ -60,12 +59,21 @@ bool GetInputMatrix(const std::string& inputFileName, Matrix3x3 matrix)
 		return false;
 	}
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < matrixSize; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < matrixSize; j++)
 		{
-			input >> matrix[i][j];
+			if (!(input >> matrix[i][j]))
+			{
+				return false;
+			};
 		}
+	}
+
+	if (input.bad())
+	{
+		std::cout << "Failed to read data to input file\n";
+		return false;
 	}
 	
 	return true;
@@ -136,14 +144,14 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 	Matrix3x3 matrix = {};
+	int arraySize = SizeOfArray(matrix);
 	
-	if (!GetInputMatrix(args->inputFileName, matrix)) 
+	if (!GetInputMatrix(args->inputFileName, matrix, arraySize))
 	{
 		return 1;
 	};
 
 	Matrix3x3 invertMatrix = {};
-	int arraySize = SizeOfArray(matrix);
 
 	InvertMatrix3x3(matrix, invertMatrix, arraySize);
 	PrintoutMatrix(invertMatrix, arraySize);
