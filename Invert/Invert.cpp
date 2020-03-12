@@ -6,6 +6,10 @@
 using namespace std;
 
 typedef double matrix3x3[3][3];
+struct Args
+{
+	string inputFileName;
+};
 
 template<typename T, size_t N>
 constexpr size_t SizeOfArray(T(&)[N])
@@ -13,12 +17,7 @@ constexpr size_t SizeOfArray(T(&)[N])
 	return N;
 }
 
-struct Args
-{
-	string inputFileName;
-};
-
-std::optional<Args> ParseArg(int argc, char* argv[])
+optional<Args> ParseArg(int argc, char* argv[])
 {
 	if (argc != 2)
 	{
@@ -153,9 +152,8 @@ int main(int argc, char* argv[])
 		std::cout << "Usage: Invert.exe <input file name>\n";
 		return 1;
 	}
-	matrix3x3 matrix = {};
+	matrix3x3 matrix;
 	int arraySize = SizeOfArray(matrix);
-	
 	if (!GetInputMatrix(args->inputFileName, matrix, arraySize))
 	{
 		return 1;
@@ -165,7 +163,7 @@ int main(int argc, char* argv[])
 	{
 		return 1;
 	}
-	matrix3x3 invertMatrix = {};
+	matrix3x3 invertMatrix;
 
 	InvertMatrix3x3(matrix, invertMatrix, arraySize);
 	PrintoutMatrix(invertMatrix, arraySize);
