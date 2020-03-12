@@ -41,7 +41,7 @@ double GetDeterminant(const matrix3x3 & matrix)
 		matrix[0][1] * matrix[1][0] * matrix[2][2];
 }
 
-void InitUnixMatrix(matrix3x3 matrix, int matrixSize)
+void InitUnixMatrix(matrix3x3 &matrix, int matrixSize)
 {
 	for(int i = 0; i < matrixSize; ++i)
 	{
@@ -59,7 +59,7 @@ void InitUnixMatrix(matrix3x3 matrix, int matrixSize)
 	}
 }
 
-bool GetInputMatrix(const std::string& inputFileName, matrix3x3 matrix, int matrixSize)
+bool GetInputMatrix(const std::string& inputFileName, matrix3x3 &matrix, int matrixSize)
 {
 	std::ifstream input;
 	input.open(inputFileName);
@@ -89,20 +89,19 @@ bool GetInputMatrix(const std::string& inputFileName, matrix3x3 matrix, int matr
 	return true;
 }
 
-void PrintoutMatrix(matrix3x3 matrix, int matrixSize)
+void PrintoutMatrix(matrix3x3 &matrix, int matrixSize)
 {
-	//cout.precision(3);
 	for (int i = 0; i < matrixSize; ++i)
 	{
 		for (int j = 0; j < matrixSize; ++j)
 		{
-			cout << setprecision(4) << matrix[i][j] << " ";
+			cout << setprecision(3) << matrix[i][j] << " ";
 		}
 		cout << "\n";
 	}
 }
 
-void InvertMatrix3x3(matrix3x3 matrix, matrix3x3 invertMatrix, int matrixSize)
+void InvertMatrix3x3(matrix3x3 &matrix, matrix3x3 &invertMatrix, int matrixSize)
 {
 	InitUnixMatrix(invertMatrix, matrixSize);
 
