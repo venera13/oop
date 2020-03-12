@@ -24,7 +24,7 @@ echo test 4 passed
 
 REM Matrix
 %MyProgram% not_empty.txt || goto err
-echo test 4 passed
+echo test 5 passed
 
 REM Тесты завершились успешно
 echo All tests passed successfuly

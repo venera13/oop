@@ -31,7 +31,7 @@ std::optional<Args> ParseArg(int argc, char* argv[])
 	return args;
 }
 
-void InitUnixMatrix(Matrix3x3 matrix, int matrixSize)
+void InitUnixMatrix(Matrix3x3 &matrix, int matrixSize)
 {
 	for(int i = 0; i < matrixSize; ++i)
 	{
@@ -49,7 +49,7 @@ void InitUnixMatrix(Matrix3x3 matrix, int matrixSize)
 	}
 }
 
-bool GetInputMatrix(const std::string& inputFileName, Matrix3x3 matrix, int matrixSize)
+bool GetInputMatrix(const std::string& inputFileName, Matrix3x3 &matrix, int matrixSize)
 {
 	std::ifstream input;
 	input.open(inputFileName);
@@ -92,7 +92,7 @@ void PrintoutMatrix(Matrix3x3 matrix, int matrixSize)
 	}
 }
 
-void InvertMatrix3x3(Matrix3x3 matrix, Matrix3x3 invertMatrix, int matrixSize)
+void InvertMatrix3x3(Matrix3x3 &matrix, Matrix3x3 &invertMatrix, int matrixSize)
 {
 	InitUnixMatrix(invertMatrix, matrixSize);
 
