@@ -5,33 +5,43 @@
 
 using namespace std;
 
-typedef double Matrix3x3[3][3];
+typedef double matrix3x3[3][3];
 
-template<typename T, std::size_t N>
-constexpr std::size_t SizeOfArray(T(&)[N])
+template<typename T, size_t N>
+constexpr size_t SizeOfArray(T(&)[N])
 {
 	return N;
 }
 
 struct Args
 {
-	std::string inputFileName;
+	string inputFileName;
 };
 
 std::optional<Args> ParseArg(int argc, char* argv[])
 {
 	if (argc != 2)
 	{
-		std::cout << "Invalid arguments count\n";
-		std::cout << "Usage: Invert.exe <input file name>\n";
-		return std::nullopt;
+		cout << "Invalid arguments count\n";
+		cout << "Usage: Invert.exe <input file name>\n";
+		return nullopt;
 	}
 	Args args;
 	args.inputFileName = argv[1];
 	return args;
 }
 
-void InitUnixMatrix(Matrix3x3 &matrix, int matrixSize)
+double GetDeterminant(const matrix3x3 & matrix)
+{
+	return matrix[0][0] * matrix[1][1] * matrix[2][2] +
+		matrix[0][2] * matrix[1][0] * matrix[2][1] +
+		matrix[0][1] * matrix[1][2] * matrix[2][0] -
+		matrix[0][2] * matrix[1][1] * matrix[2][0] -
+		matrix[0][0] * matrix[1][2] * matrix[2][1] -
+		matrix[0][1] * matrix[1][0] * matrix[2][2];
+}
+
+void InitUnixMatrix(matrix3x3 matrix, int matrixSize)
 {
 	for(int i = 0; i < matrixSize; ++i)
 	{
@@ -49,7 +59,7 @@ void InitUnixMatrix(Matrix3x3 &matrix, int matrixSize)
 	}
 }
 
-bool GetInputMatrix(const std::string& inputFileName, Matrix3x3 &matrix, int matrixSize)
+bool GetInputMatrix(const std::string& inputFileName, matrix3x3 matrix, int matrixSize)
 {
 	std::ifstream input;
 	input.open(inputFileName);
@@ -79,7 +89,7 @@ bool GetInputMatrix(const std::string& inputFileName, Matrix3x3 &matrix, int mat
 	return true;
 }
 
-void PrintoutMatrix(Matrix3x3 matrix, int matrixSize)
+void PrintoutMatrix(matrix3x3 matrix, int matrixSize)
 {
 	cout.precision(3);
 	for (int i = 0; i < matrixSize; ++i)
@@ -92,7 +102,7 @@ void PrintoutMatrix(Matrix3x3 matrix, int matrixSize)
 	}
 }
 
-void InvertMatrix3x3(Matrix3x3 &matrix, Matrix3x3 &invertMatrix, int matrixSize)
+void InvertMatrix3x3(matrix3x3 matrix, matrix3x3 invertMatrix, int matrixSize)
 {
 	InitUnixMatrix(invertMatrix, matrixSize);
 
@@ -143,7 +153,7 @@ int main(int argc, char* argv[])
 		std::cout << "Usage: Invert.exe <input file name>\n";
 		return 1;
 	}
-	Matrix3x3 matrix = {};
+	matrix3x3 matrix = {};
 	int arraySize = SizeOfArray(matrix);
 	
 	if (!GetInputMatrix(args->inputFileName, matrix, arraySize))
@@ -151,7 +161,11 @@ int main(int argc, char* argv[])
 		return 1;
 	};
 
-	Matrix3x3 invertMatrix = {};
+	if (GetDeterminant(matrix) == 0)
+	{
+		return 1;
+	}
+	matrix3x3 invertMatrix = {};
 
 	InvertMatrix3x3(matrix, invertMatrix, arraySize);
 	PrintoutMatrix(invertMatrix, arraySize);
