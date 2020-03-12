@@ -31,7 +31,7 @@ optional<Args> ParseArg(int argc, char* argv[])
 	return args;
 }
 
-double GetDeterminant(const matrix3x3 & matrix)
+double GetDeterminant(const matrix3x3 &matrix)
 {
 	return matrix[0][0] * matrix[1][1] * matrix[2][2] +
 		matrix[0][2] * matrix[1][0] * matrix[2][1] +
