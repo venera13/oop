@@ -161,6 +161,7 @@ int main(int argc, char* argv[])
 
 	if (GetDeterminant(matrix) == 0)
 	{
+		cout << "Matrix hasn't inverse\n";
 		return 1;
 	}
 	matrix3x3 invertMatrix;
