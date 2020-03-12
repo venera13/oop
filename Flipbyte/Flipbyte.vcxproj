@@ -169,7 +169,9 @@
     <None Include="tests.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test_output.txt" />
+    <Text Include="third_test.txt" />
+    <Text Include="first_test.txt" />
+    <Text Include="second_test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

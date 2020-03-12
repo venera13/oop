@@ -25,6 +25,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test_output.txt" />
+    <Text Include="first_test.txt" />
+    <Text Include="second_test.txt" />
+    <Text Include="third_test.txt" />
   </ItemGroup>
 </Project>

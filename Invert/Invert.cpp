@@ -3,20 +3,16 @@
 #include <string>
 #include <optional>
 #include <iomanip>
+#include <array>
 
 using namespace std;
 
-typedef double matrix3x3[3][3];
+typedef array<array<double, 3>, 3> matrix3x3;
+
 struct Args
 {
 	string inputFileName;
 };
-
-template<typename T, size_t N>
-constexpr size_t SizeOfArray(T(&)[N])
-{
-	return N;
-}
 
 optional<Args> ParseArg(int argc, char* argv[])
 {
@@ -36,16 +32,17 @@ double GetDeterminant(const matrix3x3 &matrix)
 	return matrix[0][0] * matrix[1][1] * matrix[2][2] +
 		matrix[0][2] * matrix[1][0] * matrix[2][1] +
 		matrix[0][1] * matrix[1][2] * matrix[2][0] -
-		matrix[0][2] * matrix[1][1] * matrix[2][0] -
+		matrix[0][2] * matrix[1][1] * matrix[2][0] - 
 		matrix[0][0] * matrix[1][2] * matrix[2][1] -
 		matrix[0][1] * matrix[1][0] * matrix[2][2];
 }
 
-void InitUnixMatrix(matrix3x3 &matrix, int matrixSize)
+matrix3x3 GetIdentityMatrix()
 {
-	for(int i = 0; i < matrixSize; ++i)
+	matrix3x3 matrix;
+	for(int i = 0; i < 3; ++i)
 	{
-		for (int j = 0; j < matrixSize; ++j)
+		for (int j = 0; j < 3; ++j)
 		{
 			if(i == j)
 			{
@@ -57,43 +54,51 @@ void InitUnixMatrix(matrix3x3 &matrix, int matrixSize)
 			}
 		}
 	}
+	return matrix;
 }
 
-bool GetInputMatrix(const std::string& inputFileName, matrix3x3 &matrix, int matrixSize)
+optional<matrix3x3> ReadMatrixFromFile(const std::string& inputFileName)
 {
 	std::ifstream input;
 	input.open(inputFileName);
 	if (!input.is_open())
 	{
 		std::cout << "Failed to open '" << inputFileName << "' for reading\n";
-		return false;
+		return nullopt;
 	}
 
-	for (int i = 0; i < matrixSize; i++)
+	matrix3x3 matrix = {
+		{
+			{0, 0, 0},
+			{0, 0, 0},
+			{0, 0, 0}
+		}
+	};
+
+	for (int i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < matrixSize; j++)
+		for (int j = 0; j < 3; j++)
 		{
 			if (!(input >> matrix[i][j]))
 			{
-				return false;
+				return nullopt;
 			};
 		}
 	}
 
 	if (input.bad())
 	{
-		std::cout << "Failed to read data to input file\n";
-		return false;
+		std::cout << "Failed to read data from input file\n";
+		return nullopt;
 	}
-	
-	return true;
+	return matrix;
 }
 
-void PrintoutMatrix(matrix3x3 &matrix, int matrixSize)
+void PrintoutMatrix(matrix3x3 &matrix)
 {
-	for (int i = 0; i < matrixSize; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
-		for (int j = 0; j < matrixSize; ++j)
+		for (int j = 0; j < 3; ++j)
 		{
 			cout << setprecision(3) << matrix[i][j] << " ";
 		}
@@ -101,46 +106,53 @@ void PrintoutMatrix(matrix3x3 &matrix, int matrixSize)
 	}
 }
 
-void InvertMatrix3x3(matrix3x3 &matrix, matrix3x3 &invertMatrix, int matrixSize)
+optional<matrix3x3> InvertMatrix3x3(matrix3x3 &matrix)
 {
-	InitUnixMatrix(invertMatrix, matrixSize);
+	if (GetDeterminant(matrix) == 0)
+	{
+		cout << "Matrix hasn't inverse\n";
+		return nullopt;
+	}
 
-	int unixString = 0;
-	double unixStringKoef = 0;
+	matrix3x3 invertMatrix = GetIdentityMatrix();
+
+	int identityRow = 0;
+	double identityItemValue = 0;
 	double stringKoef = 0;
 
-	for (int arrayColumns = 0; arrayColumns < matrixSize; ++arrayColumns)
+	for (int arrayColumn = 0; arrayColumn < 3; ++arrayColumn)
 	{
-		for (int arrayString = 0; arrayString < matrixSize; ++arrayString)
+		for (int arrayRow = 0; arrayRow < 3; ++arrayRow)
 		{
-			unixStringKoef = matrix[arrayColumns][arrayColumns];
-			if (unixStringKoef && !unixString)
+			identityItemValue = matrix[arrayColumn][arrayColumn];
+			if (identityItemValue && !identityRow)
 			{
-				for (int singleRowColumn = 0; singleRowColumn < matrixSize; ++singleRowColumn)
+				for (int singleRowColumn = 0; singleRowColumn < 3; ++singleRowColumn)
 				{
-					matrix[arrayColumns][singleRowColumn] = matrix[arrayColumns][singleRowColumn] / unixStringKoef;
-					invertMatrix[arrayColumns][singleRowColumn] = invertMatrix[arrayColumns][singleRowColumn] / unixStringKoef;
+					matrix[arrayColumn][singleRowColumn] = matrix[arrayColumn][singleRowColumn] / identityItemValue;
+					invertMatrix[arrayColumn][singleRowColumn] = invertMatrix[arrayColumn][singleRowColumn] / identityItemValue;
 				}
 
-				unixString = arrayColumns;
+				identityRow = arrayColumn;
 			}
 	
-			if (arrayString != arrayColumns)
+			if (arrayRow != arrayColumn)
 			{
-				stringKoef = matrix[arrayString][arrayColumns];
+				stringKoef = matrix[arrayRow][arrayColumn];
 				
-				for (int singleRowColumn = 0; singleRowColumn < matrixSize; ++singleRowColumn)
+				for (int singleRowColumn = 0; singleRowColumn < 3; ++singleRowColumn)
 				{
-                    matrix[arrayString][singleRowColumn] = matrix[arrayString][singleRowColumn] - matrix[unixString][singleRowColumn] * stringKoef;
-					invertMatrix[arrayString][singleRowColumn] = invertMatrix[arrayString][singleRowColumn] - invertMatrix[unixString][singleRowColumn] * stringKoef;
+                    matrix[arrayRow][singleRowColumn] = matrix[arrayRow][singleRowColumn] - matrix[identityRow][singleRowColumn] * stringKoef;
+					invertMatrix[arrayRow][singleRowColumn] = invertMatrix[arrayRow][singleRowColumn] - invertMatrix[identityRow][singleRowColumn] * stringKoef;
 				}
 				
 			}
 			stringKoef = 0;
 		}
-		unixStringKoef = 0;
-		unixString = 0;
+		identityItemValue = 0;
+		identityRow = 0;
 	}
+	return invertMatrix;
 }
 
 int main(int argc, char* argv[])
@@ -148,24 +160,22 @@ int main(int argc, char* argv[])
 	auto args = ParseArg(argc, argv);
 	if (!args)
 	{
-		std::cout << "Invalid arguments count\n";
-		std::cout << "Usage: Invert.exe <input file name>\n";
+		cout << "Invalid arguments count\n";
+		cout << "Usage: Invert.exe <input file name>\n";
 		return 1;
 	}
-	matrix3x3 matrix;
-	int arraySize = SizeOfArray(matrix);
-	if (!GetInputMatrix(args->inputFileName, matrix, arraySize))
-	{
-		return 1;
-	};
 
-	if (GetDeterminant(matrix) == 0)
+	auto matrix = ReadMatrixFromFile(args->inputFileName);
+
+	if(!matrix)
 	{
-		cout << "Matrix hasn't inverse\n";
 		return 1;
 	}
-	matrix3x3 invertMatrix;
-	InvertMatrix3x3(matrix, invertMatrix, arraySize);
-	PrintoutMatrix(invertMatrix, arraySize);
+	auto invertMatrix = InvertMatrix3x3(*matrix);
+	if(!invertMatrix)
+	{
+		return 1;
+	}
+	PrintoutMatrix(*invertMatrix);
 	return 0;
 }
