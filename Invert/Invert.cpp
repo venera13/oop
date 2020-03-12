@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <optional>
+#include <iomanip>
 
 using namespace std;
 
@@ -90,12 +91,12 @@ bool GetInputMatrix(const std::string& inputFileName, matrix3x3 matrix, int matr
 
 void PrintoutMatrix(matrix3x3 matrix, int matrixSize)
 {
-	cout.precision(3);
+	//cout.precision(3);
 	for (int i = 0; i < matrixSize; ++i)
 	{
 		for (int j = 0; j < matrixSize; ++j)
 		{
-			cout << matrix[i][j] << " ";
+			cout << setprecision(4) << matrix[i][j] << " ";
 		}
 		cout << "\n";
 	}
@@ -165,7 +166,6 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 	matrix3x3 invertMatrix;
-
 	InvertMatrix3x3(matrix, invertMatrix, arraySize);
 	PrintoutMatrix(invertMatrix, arraySize);
 	return 0;
