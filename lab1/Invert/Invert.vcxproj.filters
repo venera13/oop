@@ -15,18 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Flipbyte.cpp">
+    <ClCompile Include="Invert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tests.bat">
-      <Filter>Source Files</Filter>
-    </None>
+    <Text Include="empty.txt" />
+    <Text Include="singular_matrix.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="first_test.txt" />
-    <Text Include="second_test.txt" />
-    <Text Include="third_test.txt" />
+    <None Include="tests.bat" />
   </ItemGroup>
 </Project>
