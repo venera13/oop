@@ -20,9 +20,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="first_test.txt" />
-    <Text Include="second_test.txt" />
-    <Text Include="third_test.txt" />
+    <Text Include="integer_test.txt" />
+    <Text Include="last_eight_bit_integer_test.txt" />
+    <Text Include="float_number_test.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="tests.bat" />

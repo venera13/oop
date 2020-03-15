@@ -7,18 +7,18 @@ if %MyProgram%=="" (
 )
 
 REM Целое число
-%MyProgram% 6 > %TEMP%\first_output.txt || goto err
-fc first_test.txt "%TEMP%\first_output.txt" > nul || goto err
+%MyProgram% 6 > %TEMP%\integer_output_file.txt || goto err
+fc integer_test.txt "%TEMP%\integer_output_file.txt" > nul || goto err
 echo test 1 passed
 
 REM Число 255
-%MyProgram% 255 > %TEMP%\second_output.txt || goto err
-fc second_test.txt "%TEMP%\second_output.txt" > nul || goto err
+%MyProgram% 255 > %TEMP%\last_eight_bit_integer_output_file.txt || goto err
+fc last_eight_bit_integer_test.txt "%TEMP%\last_eight_bit_integer_output_file.txt" > nul || goto err
 echo test 2 passed
 
-REM Float
-%MyProgram% 15.4 > %TEMP%\third_output.txt || goto err
-fc third_test.txt "%TEMP%\third_output.txt" > nul || goto err
+REM Float number
+%MyProgram% 15.4 > %TEMP%\float_number_output_file.txt || goto err
+fc float_number_test.txt "%TEMP%\float_number_output_file.txt" > nul || goto err
 echo test 3 passed
 
 REM Отрицательное число
