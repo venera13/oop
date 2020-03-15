@@ -170,7 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="empty.txt" />
-    <Text Include="not_empty.txt" />
+    <Text Include="singular_matrix.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

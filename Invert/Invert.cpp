@@ -106,6 +106,22 @@ void PrintoutMatrix(matrix3x3 &matrix)
 	}
 }
 
+void DivideRowByCoefficient(matrix3x3& matrix, int matrixRow, double coefficient)
+{
+	for (int singleRowColumn = 0; singleRowColumn < 3; ++singleRowColumn)
+	{
+		matrix[matrixRow][singleRowColumn] = matrix[matrixRow][singleRowColumn] / coefficient;
+	}
+}
+
+void SetToZeroColumnValue(matrix3x3& matrix, int matrixRow, int unitValueRow, double coefficient)
+{
+	for (int singleRowColumn = 0; singleRowColumn < 3; ++singleRowColumn)
+	{
+		matrix[matrixRow][singleRowColumn] = matrix[matrixRow][singleRowColumn] - matrix[unitValueRow][singleRowColumn] * coefficient;
+	}
+}
+
 optional<matrix3x3> InvertMatrix3x3(matrix3x3 &matrix)
 {
 	if (GetDeterminant(matrix) == 0)
@@ -116,41 +132,33 @@ optional<matrix3x3> InvertMatrix3x3(matrix3x3 &matrix)
 
 	matrix3x3 invertMatrix = GetIdentityMatrix();
 
-	int identityRow = 0;
-	double identityItemValue = 0;
-	double stringKoef = 0;
+	int unitValueRow = 0;
+	double unitValueItem = 0;
+	double rowCoefficient = 0;
 
 	for (int arrayColumn = 0; arrayColumn < 3; ++arrayColumn)
 	{
 		for (int arrayRow = 0; arrayRow < 3; ++arrayRow)
 		{
-			identityItemValue = matrix[arrayColumn][arrayColumn];
-			if (identityItemValue && !identityRow)
+			unitValueItem = matrix[arrayColumn][arrayColumn];
+			if (unitValueItem && !unitValueRow)
 			{
-				for (int singleRowColumn = 0; singleRowColumn < 3; ++singleRowColumn)
-				{
-					matrix[arrayColumn][singleRowColumn] = matrix[arrayColumn][singleRowColumn] / identityItemValue;
-					invertMatrix[arrayColumn][singleRowColumn] = invertMatrix[arrayColumn][singleRowColumn] / identityItemValue;
-				}
-
-				identityRow = arrayColumn;
+				DivideRowByCoefficient(matrix, arrayColumn, unitValueItem);
+				DivideRowByCoefficient(invertMatrix, arrayColumn, unitValueItem);
 			}
+			unitValueRow = arrayColumn;
 	
 			if (arrayRow != arrayColumn)
 			{
-				stringKoef = matrix[arrayRow][arrayColumn];
+				rowCoefficient = matrix[arrayRow][arrayColumn];
 				
-				for (int singleRowColumn = 0; singleRowColumn < 3; ++singleRowColumn)
-				{
-                    matrix[arrayRow][singleRowColumn] = matrix[arrayRow][singleRowColumn] - matrix[identityRow][singleRowColumn] * stringKoef;
-					invertMatrix[arrayRow][singleRowColumn] = invertMatrix[arrayRow][singleRowColumn] - invertMatrix[identityRow][singleRowColumn] * stringKoef;
-				}
-				
+				SetToZeroColumnValue(matrix, arrayRow, unitValueRow, rowCoefficient);
+				SetToZeroColumnValue(invertMatrix, arrayRow, unitValueRow, rowCoefficient);
 			}
-			stringKoef = 0;
+			rowCoefficient = 0;
 		}
-		identityItemValue = 0;
-		identityRow = 0;
+		unitValueItem = 0;
+		unitValueRow = 0;
 	}
 	return invertMatrix;
 }
@@ -166,7 +174,6 @@ int main(int argc, char* argv[])
 	}
 
 	auto matrix = ReadMatrixFromFile(args->inputFileName);
-
 	if(!matrix)
 	{
 		return 1;

@@ -26,6 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="empty.txt" />
-    <Text Include="not_empty.txt" />
+    <Text Include="singular_matrix.txt" />
   </ItemGroup>
 </Project>

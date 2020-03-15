@@ -17,7 +17,6 @@ fc second_test.txt "%TEMP%\second_output.txt" > nul || goto err
 echo test 2 passed
 
 REM Float
-%MyProgram% 15.4 || goto err
 %MyProgram% 15.4 > %TEMP%\third_output.txt || goto err
 fc third_test.txt "%TEMP%\third_output.txt" > nul || goto err
 echo test 3 passed
