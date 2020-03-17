@@ -37,20 +37,41 @@ bool ValidateCrypeType(string cryptType)
 
 bool ValidateKey(string key)
 {
-	cout << key << "\n";
-	return all_of(key.begin(), key.end(), isdigit);
+	return all_of(key.begin(), key.end(), isdigit) && (stoi(key) >= 0 && stoi(key) <= 255);
+}
+
+uint8_t MixBits(uint8_t byte)
+{
+	uint8_t newByte = 0;
+	newByte |= (byte & 0b10000000) >> 2;
+	newByte |= (byte & 0b01100000) >> 5;
+	newByte |= (byte & 0b00011000) << 3;
+	newByte |= (byte & 0b00000111) << 2;
+	return newByte;
+}
+
+uint8_t MixBitsBack(uint8_t byte)
+{
+	uint8_t newByte = 0;
+	newByte |= (byte & 0b11000000) >> 3;
+	newByte |= (byte & 0b00100000) << 2;
+	newByte |= (byte & 0b00011100) >> 2;
+	newByte |= (byte & 0b00000011) << 5;
+	return newByte;
 }
 
 char Crypt(char ch, uint8_t key)
 {
 	uint8_t byte = static_cast<uint8_t>(ch);
 	byte ^= key;
+	byte = MixBits(byte);
 	return static_cast<char>(byte);
 }
 
 char Decrypt(char ch, uint8_t key)
 {
 	uint8_t byte = static_cast<uint8_t>(ch);
+	byte = MixBitsBack(byte);
 	byte ^= key;
 	return static_cast<char>(byte);
 }
@@ -95,7 +116,6 @@ void InitCrypt(optional<Args> args)
 		else if(args->cryptType == "decrypt")
 		{
 			output.put(Decrypt(ch, stoi(args->key)));
-			//output.put(Decrypt(ch, stoi(args->key)));
 		}
 	}
 }
