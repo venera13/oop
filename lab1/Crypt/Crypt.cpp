@@ -32,7 +32,7 @@ optional<Args> ParseArg(int argc, char* argv[])
 
 bool ValidateCrypeType(string cryptType)
 {
-	return cryptType != "crypt" || cryptType != "decrypt";
+	return cryptType == "crypt" || cryptType == "decrypt";
 }
 
 bool ValidateKey(string key)
@@ -76,19 +76,19 @@ char Decrypt(char ch, uint8_t key)
 	return static_cast<char>(byte);
 }
 
-void InitCrypt(optional<Args> args)
+bool InitCrypt(optional<Args> args)
 {
 	bool error = false; 
 
 	if (!ValidateCrypeType(args->cryptType))
 	{
 		cout << "Crypt type not valide\n";
-		return;
+		error = true;
 	}
 	if (!ValidateKey(args->key))
 	{
 		cout << "Key not valide\n";
-		return;
+		error = true;
 	}
 
 	std::ifstream input;
@@ -96,7 +96,7 @@ void InitCrypt(optional<Args> args)
 	if (!input.is_open())
 	{
 		std::cout << "Failed to open '" << args->inputFileName << "' for reading\n";
-		return;
+		error = true;
 	}
 
 	std::ofstream output;
@@ -104,7 +104,7 @@ void InitCrypt(optional<Args> args)
 	if (!output.is_open())
 	{
 		std::cout << "Failed to open '" << args->outputFileName << "' for writing\n";
-		return;
+		error = true;
 	}
 
 	for (char ch; input.get(ch); )
@@ -118,6 +118,7 @@ void InitCrypt(optional<Args> args)
 			output.put(Decrypt(ch, stoi(args->key)));
 		}
 	}
+	return !error;
 }
 
 int main(int argc, char* argv[])
@@ -130,7 +131,10 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	InitCrypt(args);
+	if (!InitCrypt(args)) 
+	{
+		return 1;
+	};
 
 	return 0;
 }
