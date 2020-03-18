@@ -91,7 +91,7 @@ bool InitCrypt(optional<Args> args)
 		error = true;
 	}
 
-	std::ifstream input;
+	ifstream input;
 	input.open(args->inputFileName);
 	if (!input.is_open())
 	{
@@ -99,7 +99,7 @@ bool InitCrypt(optional<Args> args)
 		error = true;
 	}
 
-	std::ofstream output;
+	ofstream output;
 	output.open(args->outputFileName);
 	if (!output.is_open())
 	{
