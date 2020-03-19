@@ -7,11 +7,11 @@ if %MyProgram%=="" (
 )
 
 REM Шифрование строки
-%MyProgram% crypt string.txt crypt_output.txt 50 || goto err
+%MyProgram% crypt string.txt crypt_output.txt 52 || goto err
 echo test 1 passed
 
 REM Дешифрование строки
-%MyProgram% decrypt crypt_output.txt decrypt_output.txt 50 || goto err
+%MyProgram% decrypt crypt_output.txt decrypt_output.txt 52 || goto err
 fc string.txt decrypt_output.txt > nul || goto err
 echo test 2 passed
 
@@ -48,11 +48,6 @@ echo test 9 passed
 REM Шифрование несуществующего файла
 %MyProgram% crypt none.txt crypt_none_file_output.txt 1 && goto err
 echo test 10 passed
-
-REM Шифрование буквы слова с буквой "r"(01110010) с ключем 52
-%MyProgram% crypt string.txt crypt_with_error.txt 52 || goto err
-fc string.txt crypt_with_error.txt > nul && goto err
-echo test 11 passed
 
 REM Тесты завершились успешно
 echo All tests passed successfuly
