@@ -43,7 +43,7 @@ uint8_t MixBitsBack(uint8_t byte)
 	return newByte;
 }
 
-optional<Mode> ValidateMode(string cryptType)
+optional<Mode> GetValidatedMode(string cryptType)
 {
 	if (cryptType == "crypt")
 	{
@@ -73,7 +73,7 @@ optional<Args> ParseArg(int argc, char* argv[])
 		return nullopt;
 	}
 	Args args;
-	auto cryptMode = ValidateMode(argv[1]);
+	auto cryptMode = GetValidatedMode(argv[1]);
 	if (!cryptMode)
 	{
 		cout << "Crypt mode not valide\n";
