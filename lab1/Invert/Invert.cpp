@@ -1,9 +1,9 @@
-﻿#include <iostream>
+﻿#include <array>
 #include <fstream>
-#include <string>
-#include <optional>
 #include <iomanip>
-#include <array>
+#include <iostream>
+#include <optional>
+#include <string>
 
 using namespace std;
 
@@ -27,24 +27,19 @@ optional<Args> ParseArg(int argc, char* argv[])
 	return args;
 }
 
-double GetDeterminant(const matrix3x3 &matrix)
+double GetDeterminant(const matrix3x3& matrix)
 {
-	return matrix[0][0] * matrix[1][1] * matrix[2][2] +
-		matrix[0][2] * matrix[1][0] * matrix[2][1] +
-		matrix[0][1] * matrix[1][2] * matrix[2][0] -
-		matrix[0][2] * matrix[1][1] * matrix[2][0] - 
-		matrix[0][0] * matrix[1][2] * matrix[2][1] -
-		matrix[0][1] * matrix[1][0] * matrix[2][2];
+	return matrix[0][0] * matrix[1][1] * matrix[2][2] + matrix[0][2] * matrix[1][0] * matrix[2][1] + matrix[0][1] * matrix[1][2] * matrix[2][0] - matrix[0][2] * matrix[1][1] * matrix[2][0] - matrix[0][0] * matrix[1][2] * matrix[2][1] - matrix[0][1] * matrix[1][0] * matrix[2][2];
 }
 
 matrix3x3 GetIdentityMatrix()
 {
 	matrix3x3 matrix;
-	for(int i = 0; i < 3; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		for (int j = 0; j < 3; ++j)
 		{
-			if(i == j)
+			if (i == j)
 			{
 				matrix[i][j] = 1;
 			}
@@ -68,11 +63,9 @@ optional<matrix3x3> ReadMatrixFromFile(const std::string& inputFileName)
 	}
 
 	matrix3x3 matrix = {
-		{
-			{0, 0, 0},
-			{0, 0, 0},
-			{0, 0, 0}
-		}
+		{ { 0, 0, 0 },
+			{ 0, 0, 0 },
+			{ 0, 0, 0 } }
 	};
 
 	for (int i = 0; i < 3; i++)
@@ -94,7 +87,7 @@ optional<matrix3x3> ReadMatrixFromFile(const std::string& inputFileName)
 	return matrix;
 }
 
-void PrintoutMatrix(matrix3x3 &matrix)
+void PrintoutMatrix(matrix3x3& matrix)
 {
 	for (int i = 0; i < 3; ++i)
 	{
@@ -122,7 +115,7 @@ void SetToZeroColumnValue(matrix3x3& matrix, int matrixRow, int unitValueRow, do
 	}
 }
 
-optional<matrix3x3> InvertMatrix3x3(matrix3x3 &matrix)
+optional<matrix3x3> InvertMatrix3x3(matrix3x3& matrix)
 {
 	if (GetDeterminant(matrix) == 0)
 	{
@@ -147,11 +140,11 @@ optional<matrix3x3> InvertMatrix3x3(matrix3x3 &matrix)
 				DivideRowByCoefficient(invertMatrix, arrayColumn, unitValueItem);
 			}
 			unitValueRow = arrayColumn;
-	
+
 			if (arrayRow != arrayColumn)
 			{
 				rowCoefficient = matrix[arrayRow][arrayColumn];
-				
+
 				SetToZeroColumnValue(matrix, arrayRow, unitValueRow, rowCoefficient);
 				SetToZeroColumnValue(invertMatrix, arrayRow, unitValueRow, rowCoefficient);
 			}
@@ -174,12 +167,12 @@ int main(int argc, char* argv[])
 	}
 
 	auto matrix = ReadMatrixFromFile(args->inputFileName);
-	if(!matrix)
+	if (!matrix)
 	{
 		return 1;
 	}
 	auto invertMatrix = InvertMatrix3x3(*matrix);
-	if(!invertMatrix)
+	if (!invertMatrix)
 	{
 		return 1;
 	}

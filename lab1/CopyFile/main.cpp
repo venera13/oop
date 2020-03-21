@@ -1,11 +1,11 @@
 
 #include "pch.h"
 
-#include <iostream>
+#include "main.h"
 #include <fstream>
+#include <iostream>
 #include <optional>
 #include <string>
-#include "main.h"
 
 struct Args
 {
@@ -13,7 +13,7 @@ struct Args
 	std::string outputFileName;
 };
 
-std::optional<Args> ParseArg(int argc, char * argv[])
+std::optional<Args> ParseArg(int argc, char* argv[])
 {
 	if (argc != 3)
 	{
@@ -76,10 +76,10 @@ bool CopyFile(const std::string& inputFileName, const std::string& outputFileNam
 	return true;
 }
 
-int main(int argc, char * argv[])
+int main(int argc, char* argv[])
 {
 	auto args = ParseArg(argc, argv);
-	if(!args)
+	if (!args)
 	{
 		std::cout << "Invalid arguments count\n";
 		std::cout << "Usage: CopyFile.exe <input file name> <output file name>\n";
