@@ -134,7 +134,7 @@ bool Crypter(Args args)
 	if (args.mode == Mode::Crypt)
 	{
 		transform(
-			istream_iterator<char>(input), istream_iterator<char>(),
+			istream_iterator<char>(input), (istream_iterator<char>()),
 			ostream_iterator<char>(output),
 			[key = args.key](char ch) {
 				return Encrypt(ch, key);
