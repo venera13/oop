@@ -8,6 +8,6 @@ int main(int argc, char* argv[])
 	auto numbers = GetNumbersVector(cin);
 	VectorProcessor(numbers);
 	sort(numbers.begin(), numbers.end());
-	PrintVector(numbers);
+	PrintVector(numbers, cout);
 	return 0;
 }

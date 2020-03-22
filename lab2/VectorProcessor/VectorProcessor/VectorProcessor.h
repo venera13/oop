@@ -7,4 +7,4 @@ vector<double> GetNumbersVector(istream& input);
 
 void VectorProcessor(vector<double>& numbers);
 
-void PrintVector(const vector<double>& numbers);
+void PrintVector(const vector<double>& numbers, ostream& output);

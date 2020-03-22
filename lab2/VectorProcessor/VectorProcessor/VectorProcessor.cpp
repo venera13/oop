@@ -2,6 +2,7 @@
 #include "VectorProcessor.h"
 
 #include <functional>
+#include <iterator>
 #include <numeric>
 
 using namespace std;
@@ -26,7 +27,7 @@ void VectorProcessor(vector<double>& numbers)
 	});
 }
 
-void PrintVector(const vector<double>& numbers)
+void PrintVector(const vector<double>& numbers, ostream& output)
 {
-	copy(numbers.begin(), numbers.end(), ostream_iterator<double>(cout, " "));
+	copy(numbers.begin(), numbers.end(), ostream_iterator<double>(output, " "));
 }
