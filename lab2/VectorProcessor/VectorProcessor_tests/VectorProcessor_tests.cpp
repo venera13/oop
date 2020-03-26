@@ -82,22 +82,11 @@ SCENARIO("Vector Processor")
 		}
 	}
 
-	WHEN("max number is null")
-	{
-		vector<double> numbers = { -3, -9, 0 };
-		vector<double> vectorWithNullsOnly = { 0.0, 0.0, 0.0 };
-		THEN("output vector also empty")
-		{
-			VectorProcessor(numbers);
-			CompareVectors(numbers, vectorWithNullsOnly);
-		}
-	}
-
 	WHEN("min number is null")
 	{
 		vector<double> numbers = { 3, 9, 0 };
 		vector<double> vectorWithInfinity = { inf, inf, NAN };
-		THEN("output vector also empty")
+		THEN("output vector with infinity")
 		{
 			VectorProcessor(numbers);
 			CompareVectors(numbers, vectorWithInfinity);
@@ -112,18 +101,6 @@ SCENARIO("Vector Processor")
 		{
 			VectorProcessor(numbers);
 			CompareVectors(numbers, correctVector);
-		}
-	}
-
-	WHEN("sort vector")
-	{
-		vector<double> numbers = { 5, -2, 3 };
-		vector<double> sortedCorrectVector = { -12.5, -7.5, 5 };
-		THEN("output vector also correct")
-		{
-			VectorProcessor(numbers);
-			sort(numbers.begin(), numbers.end());
-			CompareVectors(numbers, sortedCorrectVector);
 		}
 	}
 }

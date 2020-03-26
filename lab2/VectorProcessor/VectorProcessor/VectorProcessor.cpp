@@ -20,8 +20,11 @@ void VectorProcessor(vector<double>& numbers)
 	{
 		return;
 	}
-	double multiplier = *max_element(numbers.begin(), numbers.end());
-	double divider = *min_element(numbers.begin(), numbers.end());
+
+	auto minmax = minmax_element(numbers.begin(), numbers.end());
+	double divider = *minmax.first;
+	double multiplier = *minmax.second;
+
 	transform(numbers.begin(), numbers.end(), numbers.begin(), [=](double number) {
 		return number * multiplier / divider;
 	});

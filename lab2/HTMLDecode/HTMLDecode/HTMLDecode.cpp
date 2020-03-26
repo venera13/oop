@@ -17,8 +17,11 @@ struct Entities
 
 string HtmlDecode(string const& html)
 {
-	for_each(html.begin(), html.end(), [](char ch) {
-		cout << ch << "\n";
+	for_each(html.begin(), html.end(), [](const char *ch) {
+		if (ch == "&")
+		{
+			cout << ch << "\n";
+		}
 	});
 	return "html";
 }
