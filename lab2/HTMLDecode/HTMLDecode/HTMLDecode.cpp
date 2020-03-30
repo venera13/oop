@@ -43,8 +43,12 @@ string HtmlDecode(string const& html)
 		ch = html[i];
 		if (ch == '&')
 		{
+			if (!entityName.empty())
+			{
+				newHtml += entityName;
+			}
 			startPosition = i;
-			entityName += ch;
+			entityName = ch;
 		}
 		else if (!entityName.empty())
 		{
@@ -70,6 +74,7 @@ string HtmlDecode(string const& html)
 		{
 			newHtml += ch;
 		}
+		cout << entityName << "\n";
 	}
 	return newHtml;
 }
