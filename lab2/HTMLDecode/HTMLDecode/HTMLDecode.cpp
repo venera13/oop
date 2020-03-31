@@ -36,7 +36,7 @@ string HtmlDecode(string const& html)
 	int startPosition = 0;
 	int endPosition = 0;
 	char ch, symbol;
-	string newHtml, entityName;
+	string resultHtml, entityName;
 
 	for (size_t i = 0; i < html.length(); i++)
 	{
@@ -45,7 +45,7 @@ string HtmlDecode(string const& html)
 		{
 			if (!entityName.empty())
 			{
-				newHtml += entityName;
+				resultHtml += entityName;
 			}
 			startPosition = i;
 			entityName = ch;
@@ -60,11 +60,11 @@ string HtmlDecode(string const& html)
 				symbol = GetSymbolByEntityName(html.substr(startPosition, endPosition - startPosition + 1));
 				if (symbol)
 				{
-					newHtml += symbol;
+					resultHtml += symbol;
 				}
 				else
 				{
-					newHtml += entityName;
+					resultHtml += entityName;
 				}
 
 				entityName = "";
@@ -72,9 +72,8 @@ string HtmlDecode(string const& html)
 		}
 		else
 		{
-			newHtml += ch;
+			resultHtml += ch;
 		}
-		cout << entityName << "\n";
 	}
-	return newHtml;
+	return resultHtml;
 }

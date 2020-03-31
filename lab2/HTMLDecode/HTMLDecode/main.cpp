@@ -5,8 +5,14 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	string htmlString = "&gt;Cat &lt;says&t&gt; &qutot;Meow&quot;. M&amp;M&apos;";
-	string newHtml;
-	newHtml = HtmlDecode(htmlString);
-	cout << newHtml << "\n";
+	if (argc != 2)
+	{
+		std::cout << "Invalid arguments count\n";
+		std::cout << "Usage: HTMLDecode.exe <html string>\n";
+		return 1;
+	}
+	string htmlString = argv[1];
+	string resultHtml;
+	resultHtml = HtmlDecode(htmlString);
+	cout << resultHtml;
 }
