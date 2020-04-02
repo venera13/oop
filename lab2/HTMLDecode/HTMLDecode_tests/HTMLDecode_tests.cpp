@@ -28,11 +28,11 @@ SCENARIO("HTMLDecode")
 
 	WHEN("input string with uncorrect entity name")
 	{
-		std::string input("Cat &lt&lt;says&gt; &quot;Meow&quot;. M&amp;M&apos;");
+		std::string input("Cat &lt&lt;says&gt; &quot;Meow&quot;. ;M&amp;M&apos;");
 		THEN("output string with this uncorrect entity name")
 		{
 			auto result = HtmlDecode(input);
-			CHECK(result == "Cat &lt<says> \"Meow\". M&M'");
+			CHECK(result == "Cat &lt<says> \"Meow\". ;M&M'");
 		}
 	}
 
