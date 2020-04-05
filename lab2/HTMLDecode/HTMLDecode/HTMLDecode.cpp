@@ -3,10 +3,11 @@
 #include <algorithm>
 #include <functional>
 #include <iostream>
+#include <string_view>
 
 using namespace std;
 
-char GetSymbolByEntityName(string const& entityName)
+char GetSymbolByEntityName(string_view const& entityName)
 {
 	if (entityName == "&quot;")
 	{
@@ -33,8 +34,8 @@ char GetSymbolByEntityName(string const& entityName)
 
 string HtmlDecode(string const& html)
 {
-	int startPosition = 0;
-	int endPosition = 0;
+	size_t startPosition = 0;
+	size_t endPosition = 0;
 	char ch, symbol;
 	string resultHtml, entityName;
 
@@ -57,7 +58,8 @@ string HtmlDecode(string const& html)
 			if (ch == ';')
 			{
 				endPosition = i;
-				symbol = GetSymbolByEntityName(html.substr(startPosition, endPosition - startPosition + 1));
+				string_view entityName1 = html.substr(startPosition, endPosition - startPosition + 1);
+				symbol = GetSymbolByEntityName(entityName1);
 				if (symbol)
 				{
 					resultHtml += symbol;
@@ -67,7 +69,7 @@ string HtmlDecode(string const& html)
 					resultHtml += entityName;
 				}
 
-				entityName = "";
+				entityName.clear();
 			}
 		}
 		else

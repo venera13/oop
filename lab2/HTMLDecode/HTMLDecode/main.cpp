@@ -3,16 +3,12 @@
 
 using namespace std;
 
-int main(int argc, char* argv[])
+int main()
 {
-	if (argc != 2)
+	string htmlString;
+	while (getline(cin, htmlString))
 	{
-		std::cout << "Invalid arguments count\n";
-		std::cout << "Usage: HTMLDecode.exe <html string>\n";
-		return 1;
+		cout << HtmlDecode(htmlString) << endl;
 	}
-	string htmlString = argv[1];
-	string resultHtml;
-	resultHtml = HtmlDecode(htmlString);
-	cout << resultHtml;
+	return 0;
 }
