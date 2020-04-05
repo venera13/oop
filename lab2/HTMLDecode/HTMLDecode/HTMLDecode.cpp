@@ -1,11 +1,10 @@
+#include "stdafx.h"
 #include "HTMLDecode.h"
 
-#include <algorithm>
-#include <functional>
-#include <iostream>
-#include <string_view>
-
 using namespace std;
+
+const char ENTITY_NAME_START_SYMBOL = '&';
+const char ENTITY_NAME_END_SYMBOL = ';';
 
 char GetSymbolByEntityName(string_view const& entityName)
 {
@@ -32,45 +31,35 @@ char GetSymbolByEntityName(string_view const& entityName)
 	return '\0';
 }
 
+size_t StringDecodingProcess(string const& decodingString, string& resultString, size_t startPosition)
+{
+	size_t endPosition = decodingString.find_first_of(ENTITY_NAME_END_SYMBOL, startPosition);
+	string_view entityName = string_view(decodingString).substr(startPosition, endPosition - startPosition + 1);
+	char symbol = GetSymbolByEntityName(entityName);
+	if (symbol)
+	{
+		resultString += symbol;
+		startPosition = endPosition;
+	}
+	else
+	{
+		resultString += decodingString[startPosition];
+	}
+	return startPosition;
+}
+
 string HtmlDecode(string const& html)
 {
-	size_t startPosition = 0;
-	size_t endPosition = 0;
-	char ch, symbol;
-	string resultHtml, entityName;
+	char ch;
+	string resultHtml;
 
 	for (size_t i = 0; i < html.length(); i++)
 	{
 		ch = html[i];
-		if (ch == '&')
-		{
-			if (!entityName.empty())
-			{
-				resultHtml += entityName;
-			}
-			startPosition = i;
-			entityName = ch;
-		}
-		else if (!entityName.empty())
-		{
-			entityName += ch;
 
-			if (ch == ';')
-			{
-				endPosition = i;
-				string_view entityName1 = html.substr(startPosition, endPosition - startPosition + 1);
-				symbol = GetSymbolByEntityName(entityName1);
-				if (symbol)
-				{
-					resultHtml += symbol;
-				}
-				else
-				{
-					resultHtml += entityName;
-				}
-
-				entityName.clear();
-			}
+		if (ch == ENTITY_NAME_START_SYMBOL)
+		{
+			i = StringDecodingProcess(html, resultHtml, i);
 		}
 		else
 		{

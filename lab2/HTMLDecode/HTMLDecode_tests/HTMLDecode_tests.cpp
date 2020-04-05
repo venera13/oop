@@ -8,17 +8,17 @@ SCENARIO("HTMLDecode")
 {
 	WHEN("correct input string")
 	{
-		std::string input("Cat &lt;says&gt; &quot;Meow&quot;. M&amp;M&apos;");
-		THEN("correct output string")
+		std::string input("Cat &lt;says&gt; &quot;Meow&quot;. M&amp;M&apos;\nCat &lt;says&gt; &quot;Meow&quot;. M&amp;M&apos;");
+		THEN("output string also correct")
 		{
 			auto result = HtmlDecode(input);
-			CHECK(result == "Cat <says> \"Meow\". M&M'");
+			CHECK(result == "Cat <says> \"Meow\". M&M'\nCat <says> \"Meow\". M&M'");
 		}
 	}
 
 	WHEN("empty input string")
 	{
-		std::string input("");
+		std::string input;
 		THEN("output string also empty")
 		{
 			auto result = HtmlDecode(input);
@@ -26,10 +26,10 @@ SCENARIO("HTMLDecode")
 		}
 	}
 
-	WHEN("input string with uncorrect entity name")
+	WHEN("input string with invalid entity name")
 	{
 		std::string input("Cat &lt&lt;says&gt; &quot;Meow&quot;. ;M&amp;M&apos;");
-		THEN("output string with this uncorrect entity name")
+		THEN("output string with the same incorrect entity name")
 		{
 			auto result = HtmlDecode(input);
 			CHECK(result == "Cat &lt<says> \"Meow\". ;M&M'");
@@ -46,10 +46,10 @@ SCENARIO("HTMLDecode")
 		}
 	}
 
-	WHEN("input string with irreplaceable entity name")
+	WHEN("input string with unexchangeable entity name")
 	{
 		std::string input("Cat says Meow M&nbsp;M");
-		THEN("output string with this irreplaceable entity name")
+		THEN("output string with the same unexchangeable entity name")
 		{
 			auto result = HtmlDecode(input);
 			CHECK(result == "Cat says Meow M&nbsp;M");
