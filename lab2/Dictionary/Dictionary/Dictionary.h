@@ -5,6 +5,10 @@ using namespace std;
 
 multimap<string, string> GetDictionaryMap();
 
-string GetTranslationWorld(string_view const& world);
+void AddNewWord(multimap<string, string> const& dictionaryMap, string const& word, string const& tranlate);
+
+void SaveNewWords(string const& dictioanaryFileName, multimap<string, string> const& newWordsMap);
+
+string GetTranslate(multimap<string, string> const& dictionaryMap, string const& worldd);
 
 void DialogWithUser(multimap<string, string> const& dictionaryMap);
