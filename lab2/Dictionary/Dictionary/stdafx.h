@@ -7,3 +7,11 @@
 #include <string_view>
 #include <map>
 #include <optional>
+
+using namespace std;
+
+struct Dictionary
+{
+	string fileName;
+	multimap<string, string> map;
+};

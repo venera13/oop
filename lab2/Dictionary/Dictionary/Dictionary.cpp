@@ -1,14 +1,13 @@
 #include "stdafx.h"
 #include "Dictionary.h"
 
-const string DICTIONARY_FILE_PATH = "Dictionary.txt";
 const string INPUT_END_TEXT = "...";
 
-multimap<string, string> GetDictionaryMap()
+multimap<string, string> GetDictionaryMap(Dictionary const& dictionary)
 {
 	multimap<string, string> resultMap;
 	ifstream dictionaryFile;
-	dictionaryFile.open(DICTIONARY_FILE_PATH);
+	dictionaryFile.open(dictionary.fileName);
 	if (dictionaryFile.is_open())
 	{
 		while (!dictionaryFile.eof())
@@ -21,6 +20,18 @@ multimap<string, string> GetDictionaryMap()
 	}
 
 	return resultMap;
+}
+
+string GetDictionaryFileName(int argc, char* argv[])
+{
+	if (argc != 2)
+	{
+		std::cout << "Invalid arguments count\n";
+		std::cout << "Usage: Dictionary.exe <dictionary file name>\n";
+		return "";
+	}
+
+	return argv[1];
 }
 
 void AddNewWord(multimap<string, string>& dictionaryMap, string const& word, string const& tranlate) 
@@ -61,7 +72,7 @@ string GetTranslate(multimap<string, string> const& dictionaryMap, string const&
 	return translateString;
 }
 
-void DialogWithUser(multimap<string, string> const& dictionaryMap)
+void DialogWithUser(Dictionary const& dictionary)
 {
 	string inputString, newWord;
 	bool saveNewWords = false;
@@ -81,19 +92,26 @@ void DialogWithUser(multimap<string, string> const& dictionaryMap)
 		{
 			if (inputString == "Y" || inputString == "y")
 			{
-				SaveNewWords(DICTIONARY_FILE_PATH, newWords);
+				SaveNewWords(dictionary.fileName, newWords);
 				cout << "Изменения сохранены. До свидания.\n";
 			}
 			break;
 		}
 		else if (inputString == INPUT_END_TEXT)
 		{
-			cout << "В словарь были внесены изменения. Введите Y или y для сохранения перед выходом." << "\n";
-			saveNewWords = true;
+			if (!newWords.empty())
+			{
+				cout << "В словарь были внесены изменения. Введите Y или y для сохранения перед выходом." << "\n";
+				saveNewWords = true;
+			}
+			else
+			{
+				break;
+			}
 		}
 		else
 		{
-			string translate = GetTranslate(dictionaryMap, inputString);
+			string translate = GetTranslate(dictionary.map, inputString);
 			if (translate.length() == 0)
 			{
 				cout << "Неизвестное слово “" << inputString  << "”. Введите перевод или пустую строку для отказа.\n";
