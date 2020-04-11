@@ -91,7 +91,7 @@ SCENARIO("Check dictionary program")
 {
 	WHEN("correct input stream")
 	{
-		istringstream input("cat\nSun\nСолнце\n...\nY\n");
+		istringstream input("cat\nSun\nСолнце\nHello\n\n...\nY\n");
 		ostringstream output;
 		string dictionaryFileName = "DictionaryForDialogTest.txt";
 
