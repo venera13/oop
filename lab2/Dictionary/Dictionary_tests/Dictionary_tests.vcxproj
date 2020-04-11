@@ -156,7 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Dictionary\Dictionary.txt" />
+    <Text Include="DictionaryForDialogTest.txt" />
     <Text Include="DictionaryForTest.txt" />
+    <Text Include="EmptyDictionaryForTest.txt" />
     <Text Include="UncorrectDictionaryForTest.txt" />
   </ItemGroup>
   <ItemGroup>

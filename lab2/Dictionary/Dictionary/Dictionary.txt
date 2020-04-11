@@ -1,6 +1,4 @@
 cat Кошка
-cat кот
+cat    
 ball мяч
-Hello Привет
-hi привет
-home дом
+local локальный

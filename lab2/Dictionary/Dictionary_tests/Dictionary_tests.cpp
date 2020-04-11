@@ -28,7 +28,7 @@ SCENARIO("Check input streams")
 
 		THEN("correct file name")
 		{
-			string dictionaryFileName = GetDictionaryFileName(numberArguments, str);
+			string dictionaryFileName = *GetDictionaryFileName(numberArguments, str);
 			CHECK(dictionaryFileName == "Dictionary.txt");
 		}
 	}
@@ -43,7 +43,7 @@ SCENARIO("Check input streams")
 
 		THEN("output file name is also empty")
 		{
-			string dictionaryFileName = GetDictionaryFileName(numberArguments, str);
+			string dictionaryFileName = *GetDictionaryFileName(numberArguments, str);
 			CHECK(dictionaryFileName == "");
 		}
 	}
@@ -62,16 +62,46 @@ SCENARIO("Check map getting")
 			CompareMaps(dictionaryMap, testMap);
 		}
 	}
+	WHEN("dictionary file is empty")
+	{
+		string dictionaryFileName = "EmptyDictionaryForTest.txt";
+
+		multimap<string, string> testMap;
+
+		THEN("dictionary map is also empty")
+		{
+			multimap<string, string> dictionaryMap = GetDictionaryMap(dictionaryFileName);
+			CompareMaps(dictionaryMap, testMap);
+		}
+	}
 	WHEN("uncorrect dictionary file")
 	{
 		string dictionaryFileName = "UncorrectDictionaryForTest.txt";
-		multimap<string, string> testMap = { { "cat", "Кошка" }, { "cat", "Кот" }, { "Hi", "" } };
-		ostringstream output;
+		multimap<string, string> testMap = { { "cat", "Кот" }, { "Hi", "Привет" } };
 
-		THEN("correct dictionary map")
+		THEN("dictionary map is equal to nullopt")
 		{
 			multimap<string, string> dictionaryMap = GetDictionaryMap(dictionaryFileName);
-			CHECK("Некорректный файл словаря.");
+			CompareMaps(dictionaryMap, testMap);
+		}
+	}
+}
+
+SCENARIO("Check dictionary program")
+{
+	WHEN("correct input stream")
+	{
+		istringstream input("cat\nSun\nСолнце\n...\nY\n");
+		ostringstream output;
+		string dictionaryFileName = "DictionaryForDialogTest.txt";
+
+		THEN("correct dialog")
+		{
+			Dictionary dictionary;
+			dictionary.fileName = dictionaryFileName;
+			dictionary.map = { { "cat", "Кот" }, { "Hi", "Привет" } };
+			DialogWithUser(input, output, dictionary);
+			CHECK(output.str() == "Кот\n");
 		}
 	}
 }

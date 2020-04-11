@@ -15,8 +15,7 @@ multimap<string, string> GetDictionaryMap(string const& dictionaryFileName)
 		int countEmptyElem = static_cast<int>(count_if(words.cbegin(), words.cend(), [](string word) { return word.empty(); }));
 		if (words.size() != 2 || countEmptyElem != 0)
 		{
-			cout << "Некорректный файл словаря.";
-			exit(1);
+			continue;
 		}
 		resultMap.insert(pair<string, string>(words[0], words[1]));
 	}
@@ -26,13 +25,13 @@ multimap<string, string> GetDictionaryMap(string const& dictionaryFileName)
 	return resultMap;
 }
 
-string GetDictionaryFileName(int argc, char* argv[])
+optional<string> GetDictionaryFileName(int argc, char* argv[])
 {
 	if (argc != 2)
 	{
 		cout << "Invalid arguments count\n";
 		cout << "Usage: Dictionary.exe <dictionary file name>\n";
-		exit(1);
+		return nullopt;
 	}
 
 	return argv[1];
@@ -43,14 +42,15 @@ void AddNewWord(multimap<string, string>& dictionaryMap, string const& word, str
 	dictionaryMap.insert(pair<string, string>(word, tranlate));
 }
 
-void SaveNewWords(string const& dictioanaryFileName, multimap<string, string> const& newWordsMap)
+bool SaveNewWords(string const& dictioanaryFileName, multimap<string, string> const& newWordsMap)
 {
+	bool error = false;
 	ofstream output;
 	output.open(dictioanaryFileName, ios::app);
 	if (!output.is_open())
 	{
 		cout << "Файл " << dictioanaryFileName << " не удалось открыть для записи.\n";
-		exit(1);
+		error = true;
 	}
 
 	for (auto& item : newWordsMap)
@@ -58,6 +58,7 @@ void SaveNewWords(string const& dictioanaryFileName, multimap<string, string> co
 		output << "\n"
 			   << item.first << " " << item.second;
 	}
+	return error;
 }
 
 string GetTranslate(multimap<string, string> const& dictionaryMap, string const& world)
@@ -78,12 +79,12 @@ string GetTranslate(multimap<string, string> const& dictionaryMap, string const&
 	return translateString;
 }
 
-void DialogWithUser(Dictionary const& dictionary)
+void DialogWithUser(istream& input, ostream& output, Dictionary const& dictionary)
 {
 	string inputString, newWord;
 	bool saveNewWords = false;
 	multimap<string, string> newWords;
-	while (getline(cin, inputString))
+	while (getline(input, inputString))
 	{
 		if (newWord.length() != 0)
 		{
@@ -98,8 +99,10 @@ void DialogWithUser(Dictionary const& dictionary)
 		{
 			if (inputString == "Y" || inputString == "y")
 			{
-				SaveNewWords(dictionary.fileName, newWords);
-				cout << "Изменения сохранены. До свидания.\n";
+				if (SaveNewWords(dictionary.fileName, newWords))
+				{
+					cout << "Изменения сохранены. До свидания.\n";
+				}
 			}
 			break;
 		}
@@ -123,7 +126,7 @@ void DialogWithUser(Dictionary const& dictionary)
 			}
 			else
 			{
-				cout << translate << "\n";
+				output << translate << "\n";
 			}
 		}
 	}

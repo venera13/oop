@@ -3,12 +3,12 @@
 
 multimap<string, string> GetDictionaryMap(string const& dictionaryFileName);
 
-string GetDictionaryFileName(int argc, char* argv[]);
+optional<string> GetDictionaryFileName(int argc, char* argv[]);
 
 void AddNewWord(multimap<string, string> const& dictionaryMap, string const& word, string const& tranlate);
 
-void SaveNewWords(string const& dictioanaryFileName, multimap<string, string> const& newWordsMap);
+bool SaveNewWords(string const& dictioanaryFileName, multimap<string, string> const& newWordsMap);
 
 string GetTranslate(multimap<string, string> const& dictionaryMap, string const& worldd);
 
-void DialogWithUser(Dictionary const& dictionary);
+void DialogWithUser(istream& input, ostream& output, Dictionary const& dictionary);

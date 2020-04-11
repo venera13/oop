@@ -26,6 +26,8 @@
     <Text Include="..\Dictionary\Dictionary.txt" />
     <Text Include="DictionaryForTest.txt" />
     <Text Include="UncorrectDictionaryForTest.txt" />
+    <Text Include="EmptyDictionaryForTest.txt" />
+    <Text Include="DictionaryForDialogTest.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

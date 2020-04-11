@@ -7,8 +7,12 @@ int main(int argc, char* argv[])
 	SetConsoleOutputCP(1251);
 
 	Dictionary dictionary;
-	dictionary.fileName = GetDictionaryFileName(argc, argv);
+	dictionary.fileName = *GetDictionaryFileName(argc, argv);
+	if (dictionary.fileName.empty())
+	{
+		return 1;
+	}
 	dictionary.map = GetDictionaryMap(dictionary.fileName);
-	DialogWithUser(dictionary);
+	DialogWithUser(cin, cout, dictionary);
 	return 0;
 }
