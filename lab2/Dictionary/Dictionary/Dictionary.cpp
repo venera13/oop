@@ -3,21 +3,25 @@
 
 const string INPUT_END_TEXT = "...";
 
-multimap<string, string> GetDictionaryMap(Dictionary const& dictionary)
+multimap<string, string> GetDictionaryMap(string const& dictionaryFileName)
 {
 	multimap<string, string> resultMap;
-	ifstream dictionaryFile;
-	dictionaryFile.open(dictionary.fileName);
-	if (dictionaryFile.is_open())
+	string fileString;
+	ifstream dictionaryFile(dictionaryFileName);
+	while (getline(dictionaryFile, fileString))
 	{
-		while (!dictionaryFile.eof())
+		vector<string> words;
+		boost::split(words, fileString, is_any_of(" "), token_compress_on);
+		int countEmptyElem = static_cast<int>(count_if(words.cbegin(), words.cend(), [](string word) { return word.empty(); }));
+		if (words.size() != 2 || countEmptyElem != 0)
 		{
-			string word, translate;
-			dictionaryFile >> word;
-			dictionaryFile >> translate;
-			resultMap.insert(pair<string, string>(word, translate));
+			cout << "Некорректный файл словаря.";
+			exit(1);
 		}
+		resultMap.insert(pair<string, string>(words[0], words[1]));
 	}
+
+	dictionaryFile.close();
 
 	return resultMap;
 }
@@ -26,31 +30,33 @@ string GetDictionaryFileName(int argc, char* argv[])
 {
 	if (argc != 2)
 	{
-		std::cout << "Invalid arguments count\n";
-		std::cout << "Usage: Dictionary.exe <dictionary file name>\n";
-		return "";
+		cout << "Invalid arguments count\n";
+		cout << "Usage: Dictionary.exe <dictionary file name>\n";
+		exit(1);
 	}
 
 	return argv[1];
 }
 
-void AddNewWord(multimap<string, string>& dictionaryMap, string const& word, string const& tranlate) 
+void AddNewWord(multimap<string, string>& dictionaryMap, string const& word, string const& tranlate)
 {
 	dictionaryMap.insert(pair<string, string>(word, tranlate));
 }
 
 void SaveNewWords(string const& dictioanaryFileName, multimap<string, string> const& newWordsMap)
 {
-	std::ofstream output;
+	ofstream output;
 	output.open(dictioanaryFileName, ios::app);
 	if (!output.is_open())
 	{
-		std::cout << "Failed to open '" << dictioanaryFileName << "' for writing\n";
+		cout << "Файл " << dictioanaryFileName << " не удалось открыть для записи.\n";
+		exit(1);
 	}
 
 	for (auto& item : newWordsMap)
 	{
-		output << "\n" << item.first << " " << item.second;
+		output << "\n"
+			   << item.first << " " << item.second;
 	}
 }
 
@@ -99,22 +105,20 @@ void DialogWithUser(Dictionary const& dictionary)
 		}
 		else if (inputString == INPUT_END_TEXT)
 		{
-			if (!newWords.empty())
-			{
-				cout << "В словарь были внесены изменения. Введите Y или y для сохранения перед выходом." << "\n";
-				saveNewWords = true;
-			}
-			else
+			if (newWords.empty())
 			{
 				break;
 			}
+			cout << "В словарь были внесены изменения. Введите Y или y для сохранения перед выходом."
+				 << "\n";
+			saveNewWords = true;
 		}
 		else
 		{
 			string translate = GetTranslate(dictionary.map, inputString);
 			if (translate.length() == 0)
 			{
-				cout << "Неизвестное слово “" << inputString  << "”. Введите перевод или пустую строку для отказа.\n";
+				cout << "Неизвестное слово “" << inputString << "”. Введите перевод или пустую строку для отказа.\n";
 				newWord = inputString;
 			}
 			else

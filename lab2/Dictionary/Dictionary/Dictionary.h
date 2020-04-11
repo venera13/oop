@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-multimap<string, string> GetDictionaryMap(Dictionary const& dictionary);
+multimap<string, string> GetDictionaryMap(string const& dictionaryFileName);
 
 string GetDictionaryFileName(int argc, char* argv[]);
 

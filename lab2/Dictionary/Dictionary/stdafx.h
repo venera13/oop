@@ -1,14 +1,17 @@
 #pragma once
 #include <Windows.h>
 
-#include <iostream>
 #include <fstream>
-#include <string>
-#include <string_view>
+#include <iostream>
 #include <map>
 #include <optional>
+#include <string>
+#include <string_view>
+#include <vector>
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
+using namespace boost;
 
 struct Dictionary
 {

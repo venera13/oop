@@ -1,5 +1,6 @@
-cat кошка
+cat Кошка
 cat кот
 ball мяч
 Hello Привет
-top Вверх
+hi привет
+home дом

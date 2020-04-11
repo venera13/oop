@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 
 	Dictionary dictionary;
 	dictionary.fileName = GetDictionaryFileName(argc, argv);
-	dictionary.map = GetDictionaryMap(dictionary);
+	dictionary.map = GetDictionaryMap(dictionary.fileName);
 	DialogWithUser(dictionary);
 	return 0;
 }

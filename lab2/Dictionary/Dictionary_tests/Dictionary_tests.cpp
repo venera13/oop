@@ -1,20 +1,77 @@
-// Dictionary_tests.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+#define CATCH_CONFIG_MAIN
+#include "../../../catch/catch.hpp"
 
-#include <iostream>
+#include "../Dictionary/Dictionary.h"
+#include <Windows.h>
 
-int main()
+using namespace std;
+
+void CompareMaps(multimap<string, string> const& firstMap, multimap<string, string> const& secondMap)
 {
-    std::cout << "Hello World!\n";
+	for (auto it1 = firstMap.cbegin(), it2 = secondMap.cbegin(); it1 != firstMap.cend(); ++it1, ++it2)
+	{
+		CHECK(it1->first == it2->first);
+		CHECK(it1->second == it2->second);
+	}
+		
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+SCENARIO("Check input streams")
+{
+	WHEN("correct input stream")
+	{
+		int numberArguments = 2;
+		char args[][255] = { "C:\\projects\\study\\oop\\lab2\\Dictionary\\x64\\Debug\\Dictionary.exe", "Dictionary.txt" };
+		char* str[2];
+		str[0] = &args[0][0];
+		str[1] = &args[1][0];
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+		THEN("correct file name")
+		{
+			string dictionaryFileName = GetDictionaryFileName(numberArguments, str);
+			CHECK(dictionaryFileName == "Dictionary.txt");
+		}
+	}
+
+	WHEN("input file name is empty")
+	{
+		int numberArguments = 2;
+		char args[][255] = { "C:\\projects\\study\\oop\\lab2\\Dictionary\\x64\\Debug\\Dictionary.exe", "" };
+		char* str[2];
+		str[0] = &args[0][0];
+		str[1] = &args[1][0];
+
+		THEN("output file name is also empty")
+		{
+			string dictionaryFileName = GetDictionaryFileName(numberArguments, str);
+			CHECK(dictionaryFileName == "");
+		}
+	}
+}
+
+SCENARIO("Check map getting")
+{
+	WHEN("correct dictionary file")
+	{
+		string dictionaryFileName = "DictionaryForTest.txt";
+		multimap<string, string> testMap = { { "cat", "Кошка" }, { "cat", "Кот" }, { "Hi", "Привет" } };
+
+		THEN("correct dictionary map")
+		{
+			multimap<string, string> dictionaryMap = GetDictionaryMap(dictionaryFileName);
+			CompareMaps(dictionaryMap, testMap);
+		}
+	}
+	WHEN("uncorrect dictionary file")
+	{
+		string dictionaryFileName = "UncorrectDictionaryForTest.txt";
+		multimap<string, string> testMap = { { "cat", "Кошка" }, { "cat", "Кот" }, { "Hi", "" } };
+		ostringstream output;
+
+		THEN("correct dictionary map")
+		{
+			multimap<string, string> dictionaryMap = GetDictionaryMap(dictionaryFileName);
+			CHECK("Некорректный файл словаря.");
+		}
+	}
+}

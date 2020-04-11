@@ -22,4 +22,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Dictionary\Dictionary.txt" />
+    <Text Include="DictionaryForTest.txt" />
+    <Text Include="UncorrectDictionaryForTest.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>
