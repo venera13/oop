@@ -21,21 +21,27 @@ REM Float number
 fc float_number_test.txt "%TEMP%\float_number_output_file.txt" > nul || goto err
 echo test 3 passed
 
+REM Вводимый параметр 0
+%MyProgram% 0 > %TEMP%\null_number_output_file.txt || goto err
+fc null_number_test.txt "%TEMP%\null_number_output_file.txt" > nul || goto err
+
+echo test 4 passed
+
 REM Отрицательное число
 %MyProgram% -5 && goto err
-echo test 4 passed
+echo test 5 passed
 
 REM Число больше 255
 %MyProgram% 300 && goto err
-echo test 5 passed
+echo test 6 passed
 
 REM Строка
 %MyProgram% abc && goto err
-echo test 6 passed
+echo test 7 passed
 
 REM Пустой параметр
 %MyProgram% && goto err
-echo test 7 passed
+echo test 8 passed
 
 REM Тесты завершились успешно
 echo All tests passed successfuly

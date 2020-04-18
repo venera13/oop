@@ -95,7 +95,7 @@ SCENARIO("Check dictionary program")
 		ostringstream output;
 		string dictionaryFileName = "DictionaryForDialogTest.txt";
 
-		THEN("correct dialog")
+		THEN("correct translations")
 		{
 			Dictionary dictionary;
 			dictionary.fileName = dictionaryFileName;
@@ -110,7 +110,7 @@ SCENARIO("Check dictionary program")
 		ostringstream output;
 		string dictionaryFileName = "DictionaryForDialogTest.txt";
 
-		THEN("correct dialog")
+		THEN("correct translations")
 		{
 			Dictionary dictionary;
 			dictionary.fileName = dictionaryFileName;

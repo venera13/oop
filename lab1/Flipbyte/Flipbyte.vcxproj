@@ -172,6 +172,7 @@
     <Text Include="float_number_test.txt" />
     <Text Include="integer_test.txt" />
     <Text Include="last_eight_bit_integer_test.txt" />
+    <Text Include="null_number_test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

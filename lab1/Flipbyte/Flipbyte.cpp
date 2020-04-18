@@ -16,17 +16,22 @@ std::optional<Arg> ParseArg(int argc, char* argv[])
 		std::cout << "Usage: Filebyte.exe <number is decimal numeric system>\n";
 		return std::nullopt;
 	}
-	if (std::stoi(argv[1]) < std::numeric_limits<uint8_t>::min() || std::stoi(argv[1]) > std::numeric_limits<uint8_t>::max())
+	int inputByte;
+	try
 	{
-		return std::nullopt;
+		inputByte = std::stoi(argv[1]);
 	}
-	Arg arg;
-	arg.byte = std::stoi(argv[1]);
-	if (!arg.byte)
+	catch (const std::logic_error&)
 	{
 		std::cout << "This is not a number!\n";
 		return std::nullopt;
 	}
+	if (inputByte < std::numeric_limits<uint8_t>::min() || inputByte > std::numeric_limits<uint8_t>::max())
+	{
+		return std::nullopt;
+	}
+	Arg arg;
+	arg.byte = inputByte;
 	return arg;
 }
 
