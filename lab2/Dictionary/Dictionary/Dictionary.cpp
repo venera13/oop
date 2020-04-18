@@ -61,9 +61,16 @@ bool SaveNewWords(string const& dictioanaryFileName, multimap<string, string> co
 	return error;
 }
 
+string StringToLowerCase(string const& inputString)
+{
+	string stringToLowerCase = inputString;
+	transform(stringToLowerCase.begin(), stringToLowerCase.end(), stringToLowerCase.begin(), ::tolower);
+	return stringToLowerCase;
+}
+
 string GetTranslate(multimap<string, string> const& dictionaryMap, string const& world)
 {
-	auto translate = dictionaryMap.equal_range(world);
+	auto translate = dictionaryMap.equal_range(StringToLowerCase(world));
 	string translateString;
 	if (translate.first != translate.second)
 	{
@@ -90,7 +97,7 @@ void DialogWithUser(istream& input, ostream& output, Dictionary const& dictionar
 		{
 			if (inputString.length() != 0)
 			{
-				AddNewWord(newWords, newWord, inputString);
+				AddNewWord(newWords, StringToLowerCase(newWord), inputString);
 				cout << "—лово У" << newWord << "Ф сохранено в словаре как У" << inputString << "Ф.\n";
 			}
 			newWord.clear();
@@ -119,6 +126,10 @@ void DialogWithUser(istream& input, ostream& output, Dictionary const& dictionar
 		else
 		{
 			string translate = GetTranslate(dictionary.map, inputString);
+			if (translate.length() == 0)
+			{
+				translate = GetTranslate(newWords, inputString);
+			}
 			if (translate.length() == 0)
 			{
 				cout << "Ќеизвестное слово У" << inputString << "Ф. ¬ведите перевод или пустую строку дл€ отказа.\n";

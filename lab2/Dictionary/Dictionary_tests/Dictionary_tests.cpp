@@ -91,7 +91,7 @@ SCENARIO("Check dictionary program")
 {
 	WHEN("correct input stream")
 	{
-		istringstream input("cat\nSun\nСолнце\nHello\n\n...\nY\n");
+		istringstream input("cat\nSun\nСолнце\nHello\n\nSun\n...\nY\n");
 		ostringstream output;
 		string dictionaryFileName = "DictionaryForDialogTest.txt";
 
@@ -101,7 +101,22 @@ SCENARIO("Check dictionary program")
 			dictionary.fileName = dictionaryFileName;
 			dictionary.map = { { "cat", "Кот" }, { "Hi", "Привет" } };
 			DialogWithUser(input, output, dictionary);
-			CHECK(output.str() == "Кот\n");
+			CHECK(output.str() == "Кот\nСолнце\n");
+		}
+	}
+	WHEN("input stream with words in different case")
+	{
+		istringstream input("cat\nCat\n...\nY\n");
+		ostringstream output;
+		string dictionaryFileName = "DictionaryForDialogTest.txt";
+
+		THEN("correct dialog")
+		{
+			Dictionary dictionary;
+			dictionary.fileName = dictionaryFileName;
+			dictionary.map = { { "cat", "Кот" }, { "Hi", "Привет" } };
+			DialogWithUser(input, output, dictionary);
+			CHECK(output.str() == "Кот\nКот\n");
 		}
 	}
 }

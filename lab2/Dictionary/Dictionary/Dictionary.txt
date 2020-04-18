@@ -1,4 +1,5 @@
 cat Кошка
-cat    
+cat Кот
 ball мяч
 local локальный
+sun Солнце
