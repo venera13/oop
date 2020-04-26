@@ -29,12 +29,12 @@ public:
 
 	bool TurnOnEngine();
 	bool TurnOffEngine();
+	void SetDirection();
 	bool SetGear(Gear gear);
 	bool SetSpeed(int speed);
 
 	Gear GetGear();
 	int GetSpeed();
-
 	Direction GetDirection();
 
 

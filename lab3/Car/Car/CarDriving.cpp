@@ -92,15 +92,29 @@ bool CCarDriving::SetGear(int gear)
 	return false;
 }
 
-void CCarDriving::DoCommand(string const& command)
+void CCarDriving::DoCommand(string const& commandLine)
 {
-	if (command == "EngineOn")
+	vector<string> command;
+	boost::split(command, commandLine, is_any_of(" "), token_compress_on);
+
+	if (command[0] == "EngineOn" && command.size() == 1)
 	{
 		TurnOnEngine();
 	}
-	else if (command == "EngineOff")
+	else if (command[0] == "EngineOff" && command.size() == 1)
 	{
 		TurnOffEngine();
 	}
-	
+	else if (command[0] == "SetGear" && command.size() == 2)
+	{
+		SetGear(stoi(command[1]));
+	}
+	else if (command[0] == "SetSpeed" && command.size() == 2)
+	{
+		SetSpeed(stoi(command[1]));
+	}
+	else
+	{
+		cout << "Unknow command" << endl; 
+	}
 }
