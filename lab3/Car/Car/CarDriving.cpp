@@ -23,6 +23,53 @@ Gear IntToGear(int const& gear)
 	}
 }
 
+string GetStringGear(Gear const& gear)
+{
+	switch (gear)
+	{
+	case Gear::Reverse:
+		return "reverse";
+	case Gear::Neutral:
+		return "neutral";
+	case Gear::First:
+		return "first";
+	case Gear::Second:
+		return "second";
+	case Gear::Third:
+		return "third";
+	case Gear::Fourth:
+		return "fourth";
+	case Gear::Fifth:
+		return "fifth";
+	default:
+		return "unknown gear";
+	}
+}
+
+string GetStringDirection(Direction const& direction)
+{
+	switch (direction)
+	{
+	case Direction::Back:
+		return "back";
+	case Direction::Forward:
+		return "forward";
+	case Direction::Stop:
+		return "stop";
+	default:
+		return "unknown direction";
+	}
+}
+
+string GetEngineStatus(bool const& engineStatus)
+{
+	if (engineStatus)
+	{
+		return "On";
+	}
+	return "Off";
+}
+
 CCarDriving::CCarDriving(CCar& car)
 	: m_car(car)
 {
@@ -92,6 +139,14 @@ bool CCarDriving::SetGear(int gear)
 	return false;
 }
 
+void CCarDriving::GetInfo()
+{
+	cout << "  Engine is " << GetEngineStatus(m_car.CheckIsEngineTurnOn()) << endl;
+	cout << "  Direction " << GetStringDirection(m_car.GetDirection()) << endl;
+	cout << "  Speed " << m_car.GetSpeed() << endl;
+	cout << "  Gear " << GetStringGear(m_car.GetGear()) << endl;
+}
+
 void CCarDriving::DoCommand(string const& commandLine)
 {
 	vector<string> command;
@@ -112,6 +167,10 @@ void CCarDriving::DoCommand(string const& commandLine)
 	else if (command[0] == "SetSpeed" && command.size() == 2)
 	{
 		SetSpeed(stoi(command[1]));
+	}
+	else if (command[0] == "GetInfo" && command.size() == 1)
+	{
+		GetInfo();
 	}
 	else
 	{

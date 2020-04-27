@@ -29,14 +29,14 @@ public:
 
 	bool TurnOnEngine();
 	bool TurnOffEngine();
-	void SetDirection();
+	void SetDirection(Gear const& gear = Gear::Neutral);
 	bool SetGear(Gear gear);
 	bool SetSpeed(int speed);
 
 	Gear GetGear();
 	int GetSpeed();
 	Direction GetDirection();
-
+	bool CheckIsEngineTurnOn();
 
 private:
 	bool m_isEngineTurnOn = false;

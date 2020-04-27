@@ -12,6 +12,7 @@ public:
 	bool TurnOffEngine();
 	bool SetSpeed(int speed);
 	bool SetGear(int gear);
+	void GetInfo();
 
 	void DoCommand(string const& command);
 

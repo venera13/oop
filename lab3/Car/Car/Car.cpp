@@ -46,21 +46,18 @@ bool CCar::TurnOffEngine()
 	return false;
 }
 
-void CCar::SetDirection()
+void CCar::SetDirection(Gear const& gear)
 {
-	if (m_gear == Gear::Reverse && m_speed != 0)
+	if ((m_gear == Gear::Reverse || m_gear == Gear::Neutral) && (gear == Gear::Neutral || gear == Gear::Reverse) && m_speed != 0)
 	{
-		cout << "direction back\n";
 		m_direction = Direction::Back;
 	}
 	else if (m_speed == 0)
 	{
-		cout << "direction stop\n";
 		m_direction = Direction::Stop;
 	}
 	else
 	{
-		cout << "direction forward\n";
 		m_direction = Direction::Forward;
 	}
 }
@@ -72,7 +69,7 @@ bool CCar::SetGear(Gear gear)
 		if (gear == Gear::Neutral)
 		{
 			m_gear = gear;
-			SetDirection();
+			SetDirection(gear);
 			return true;
 		}
 		else
@@ -95,8 +92,8 @@ bool CCar::SetGear(Gear gear)
 		{
 			return false;
 		}
+		SetDirection(gear);
 		m_gear = gear;
-		SetDirection();
 		return true;
 	}
 	return false;
@@ -109,6 +106,7 @@ bool CCar::SetSpeed(int speed)
 		if (speed <= m_speed)
 		{
 			m_speed = speed;
+			SetDirection();
 			return true;
 		}
 		return false;
@@ -116,6 +114,7 @@ bool CCar::SetSpeed(int speed)
 	if (IsSpeedInGearRange(m_gear, speed))
 	{
 		m_speed = speed;
+		SetDirection();
 		return true;
 	}
 	return false;
@@ -134,4 +133,9 @@ int CCar::GetSpeed()
 Direction CCar::GetDirection()
 {
 	return m_direction;
+}
+
+bool CCar::CheckIsEngineTurnOn()
+{
+	return m_isEngineTurnOn;
 }
