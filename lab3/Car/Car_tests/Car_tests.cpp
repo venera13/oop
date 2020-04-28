@@ -2,7 +2,7 @@
 #define CATCH_CONFIG_MAIN
 #include "../../../catch/catch.hpp"
 
-#include "../Car/Car.h"
+#include "../Car/CarDriving.h"
 
 SCENARIO("Engine on")
 {
@@ -134,11 +134,11 @@ SCENARIO("Change speed")
 	WHEN("engine was on, gear is neutral")
 	{
 		CCar car;
-		THEN("return true")
+		THEN("return false")
 		{
 			car.TurnOnEngine();
 			auto result = car.SetSpeed(100);
-			CHECK(result == true);
+			CHECK(result == false);
 		}
 	}
 
@@ -174,6 +174,67 @@ SCENARIO("Change speed")
 			car.TurnOnEngine();
 			auto result = car.SetSpeed(20);
 			CHECK(result == false);
+		}
+	}
+}
+
+SCENARIO("Check direction")
+{
+	WHEN("speed is 0") 
+	{
+		CCar car;
+		THEN("direction is stop") 
+		{
+			auto result = car.GetDirection();
+			CHECK(result == Direction::Stop);
+		}
+	}
+	WHEN("speed is't 0, gear is first")
+	{
+		CCar car;
+		car.TurnOnEngine();
+		car.SetGear(Gear::First);
+		car.SetSpeed(20);
+		THEN("direction is forward")
+		{
+			auto result = car.GetDirection();
+			CHECK(result == Direction::Forward);
+		}
+	}
+	WHEN("speed is't 0, gear is reverse")
+	{
+		CCar car;
+		car.TurnOnEngine();
+		car.SetGear(Gear::Reverse);
+		car.SetSpeed(20);
+		THEN("direction is back")
+		{
+			auto result = car.GetDirection();
+			CHECK(result == Direction::Back);
+		}
+	}
+}
+
+SCENARIO("Car driving")
+{
+	WHEN("correct commands") 
+	{
+		stringstream input("EngineOn\nSetGear 1\nSetSpeed 20\nSetGear 2\nSetGear 0\nSetSpeed 10\nEngineOff\n");
+		THEN("correct driving") 
+		{
+			CCar car;
+			CCarDriving carDriving(car);
+			string command;
+			while (getline(input, command))
+			{
+				carDriving.DoCommand(command);
+			}
+			auto direction = car.GetDirection();
+			auto gear = car.GetGear();
+			auto speed = car.GetSpeed();
+			CHECK(direction == Direction::Forward);
+			CHECK(gear == Gear::Neutral);
+			CHECK(speed == 10);
 		}
 	}
 }

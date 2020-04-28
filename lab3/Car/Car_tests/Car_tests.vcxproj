@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Car\Car.cpp" />
+    <ClCompile Include="..\Car\CarDriving.cpp" />
     <ClCompile Include="Car_tests.cpp" />
   </ItemGroup>
   <ItemGroup>

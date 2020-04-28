@@ -48,7 +48,7 @@ bool CCar::TurnOffEngine()
 
 void CCar::SetDirection(Gear const& gear)
 {
-	if ((m_gear == Gear::Reverse || m_gear == Gear::Neutral) && (gear == Gear::Neutral || gear == Gear::Reverse) && m_speed != 0)
+	if (((m_gear == Gear::Reverse && gear == Gear::Neutral) || (m_gear == Gear::Neutral && gear == Gear::Reverse)) && m_speed != 0)
 	{
 		m_direction = Direction::Back;
 	}
@@ -111,7 +111,7 @@ bool CCar::SetSpeed(int speed)
 		}
 		return false;
 	}
-	if (IsSpeedInGearRange(m_gear, speed))
+	if (IsSpeedInGearRange(m_gear, speed) && m_isEngineTurnOn)
 	{
 		m_speed = speed;
 		SetDirection();
