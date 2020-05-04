@@ -5,6 +5,7 @@
 #include "SolidShape.h"
 #include "Triangle.h"
 #include "Rectangle.h"
+#include "Circle.h"
 
 void CConsoleCommand::DoCommand(string const& commandLine)
 {
@@ -25,5 +26,10 @@ void CConsoleCommand::DoCommand(string const& commandLine)
 	{
 		CRectangle rectangle(CPoint(stod(command[1]), stod(command[2])), stod(command[3]), stod(command[4]), command[5], command[6]);
 		cout << rectangle.ToString();
+	}
+	else if (command[0] == "Circle" && command.size() == 6)
+	{
+		CCircle circle(CPoint(stod(command[1]), stod(command[2])), stod(command[3]), command[4], command[5]);
+		cout << circle.ToString();
 	}
 }

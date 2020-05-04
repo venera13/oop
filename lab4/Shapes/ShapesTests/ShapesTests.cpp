@@ -3,6 +3,7 @@
 #include "../../../catch/catch.hpp"
 
 #include "../Shapes/ConsoleCommand.h"
+#include "../Shapes/Circle.h"
 #include "../Shapes/Rectangle.h"
 #include "../Shapes/Triangle.h"
 #include "../Shapes/LineSegment.h"
@@ -93,6 +94,34 @@ SCENARIO("Rectangle")
 			CHECK(height == 3.0);
 			CHECK(area == 12);
 			CHECK(perimeter == 14);
+			CHECK(outlineColor == "ff00ff");
+			CHECK(fillColor == "cecece");
+		}
+	}
+}
+
+SCENARIO("Circle")
+{
+	WHEN("create circle")
+	{
+		CCircle circle(CPoint(1.0, 4.0), 4.0, "ff00ff", "cecece");
+		double testArea = M_PI * 4.0 * 4.0;
+		double testPerimeter = 2 * M_PI * 4.0;
+		THEN("correct result")
+		{
+			auto centerPointX = circle.GetCenter().x();
+			auto centerPointY = circle.GetCenter().y();
+			auto radius = circle.GetRadius();
+			auto area = circle.GetArea();
+			auto perimeter = circle.GetPerimeter();
+			auto outlineColor = circle.GetOutlineColor();
+			auto fillColor = circle.GetFillColor();
+
+			CHECK(centerPointX == 1.0);
+			CHECK(centerPointY == 4.0);
+			CHECK(radius == 4.0);
+			CHECK(area == testArea);
+			CHECK(perimeter == testPerimeter);
 			CHECK(outlineColor == "ff00ff");
 			CHECK(fillColor == "cecece");
 		}
