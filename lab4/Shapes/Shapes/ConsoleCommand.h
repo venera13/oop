@@ -1,9 +1,11 @@
 #pragma once
+#include "Shape.h"
+#include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
-#include <boost/algorithm/string.hpp>
 
 using namespace std;
 using namespace boost;
@@ -14,5 +16,8 @@ public:
 	CConsoleCommand() = default;
 	~CConsoleCommand() = default;
 
-	void DoCommand(string const& commandLine);
+	void DoCommand(istream& commands);
+
+private:
+	vector<unique_ptr<IShape>> m_shapes;
 };

@@ -3,9 +3,13 @@
 int main()
 {
 	CConsoleCommand consoleCommand;
-	string command;
-	while (getline(cin, command))
+	try
 	{
-		consoleCommand.DoCommand(command);
+		consoleCommand.DoCommand(cin);
 	}
+	catch (invalid_argument const& e)
+	{
+		cout << e.what() << endl;
+	}
+	return false;
 }

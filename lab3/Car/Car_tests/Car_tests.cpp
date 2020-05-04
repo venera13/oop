@@ -154,7 +154,7 @@ SCENARIO("Change speed")
 		}
 	}
 
-	WHEN("engine was on, gear is first, uncorrect speed")
+	WHEN("engine was on, gear is first, incorrect speed")
 	{
 		CCar car;
 		THEN("return false")
