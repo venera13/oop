@@ -20,10 +20,11 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{F4F75A0D-6E7E-405A-A9B9-58BEC953C9D1}</ProjectGuid>
+    <ProjectGuid>{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Shapes</RootNamespace>
+    <RootNamespace>ShapesTests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ShapesTests</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -96,6 +97,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -111,6 +115,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -130,6 +137,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -149,25 +159,18 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ConsoleCommand.cpp" />
-    <ClCompile Include="LineSegment.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Shape.cpp" />
-    <ClCompile Include="SolidShape.cpp" />
-    <ClCompile Include="Triangle.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ConsoleCommand.h" />
-    <ClInclude Include="IShape.h" />
-    <ClInclude Include="ISolidShape.h" />
-    <ClInclude Include="LineSegment.h" />
-    <ClInclude Include="Point.h" />
-    <ClInclude Include="Shape.h" />
-    <ClInclude Include="SolidShape.h" />
-    <ClInclude Include="Triangle.h" />
+    <ClCompile Include="..\Shapes\ConsoleCommand.cpp" />
+    <ClCompile Include="..\Shapes\LineSegment.cpp" />
+    <ClCompile Include="..\Shapes\Point.cpp" />
+    <ClCompile Include="..\Shapes\Shape.cpp" />
+    <ClCompile Include="..\Shapes\SolidShape.cpp" />
+    <ClCompile Include="..\Shapes\Triangle.cpp" />
+    <ClCompile Include="ShapesTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

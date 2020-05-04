@@ -7,8 +7,8 @@ public:
 	CShape() = default;
 	~CShape() = default;
 
-	void SetOutlineColor(string const& color);
-	string GetOutlineColor() const;
+	void SetOutlineColor(string const& color) override;
+	string GetOutlineColor() const override;
 
 private:
 	string m_outlineColor = "000000";

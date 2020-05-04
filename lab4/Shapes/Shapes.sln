@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shapes", "Shapes\Shapes.vcxproj", "{F4F75A0D-6E7E-405A-A9B9-58BEC953C9D1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shapes_tests", "ShapesTests\ShapesTests.vcxproj", "{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{F4F75A0D-6E7E-405A-A9B9-58BEC953C9D1}.Release|x64.Build.0 = Release|x64
 		{F4F75A0D-6E7E-405A-A9B9-58BEC953C9D1}.Release|x86.ActiveCfg = Release|Win32
 		{F4F75A0D-6E7E-405A-A9B9-58BEC953C9D1}.Release|x86.Build.0 = Release|Win32
+		{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}.Debug|x64.ActiveCfg = Debug|x64
+		{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}.Debug|x64.Build.0 = Debug|x64
+		{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}.Debug|x86.ActiveCfg = Debug|Win32
+		{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}.Debug|x86.Build.0 = Debug|Win32
+		{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}.Release|x64.ActiveCfg = Release|x64
+		{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}.Release|x64.Build.0 = Release|x64
+		{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}.Release|x86.ActiveCfg = Release|Win32
+		{E7AF11AB-CFDC-4AEB-8726-5850B46B556B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
