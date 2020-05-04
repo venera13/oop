@@ -3,6 +3,7 @@
 #include "../../../catch/catch.hpp"
 
 #include "../Shapes/ConsoleCommand.h"
+#include "../Shapes/Rectangle.h"
 #include "../Shapes/Triangle.h"
 #include "../Shapes/LineSegment.h"
 #include "../Shapes/Point.h"
@@ -60,6 +61,38 @@ SCENARIO("Triangle")
 			CHECK(vertex3Y == 1.0);
 			CHECK(area == 24);
 			CHECK(perimeter == 24);
+			CHECK(outlineColor == "ff00ff");
+			CHECK(fillColor == "cecece");
+		}
+	}
+}
+
+SCENARIO("Rectangle")
+{
+	WHEN("create rectangle")
+	{
+		CRectangle rectangle(CPoint(1.0, 4.0), 4.0, 3.0, "ff00ff", "cecece");
+		THEN("correct result")
+		{
+			auto leftTopPointX = rectangle.GetLeftTopPoint().x();
+			auto leftTopPointY = rectangle.GetLeftTopPoint().y();
+			auto rightBottomPointX = rectangle.GetRightBottomPoint().x();
+			auto rightBottomPointY = rectangle.GetRightBottomPoint().y();
+			auto width = rectangle.GetWidth();
+			auto height = rectangle.GetHeight();
+			auto area = rectangle.GetArea();
+			auto perimeter = rectangle.GetPerimeter();
+			auto outlineColor = rectangle.GetOutlineColor();
+			auto fillColor = rectangle.GetFillColor();
+
+			CHECK(leftTopPointX == 1.0);
+			CHECK(leftTopPointY == 4.0);
+			CHECK(rightBottomPointX == 5.0);
+			CHECK(rightBottomPointY == 1.0);
+			CHECK(width == 4.0);
+			CHECK(height == 3.0);
+			CHECK(area == 12);
+			CHECK(perimeter == 14);
 			CHECK(outlineColor == "ff00ff");
 			CHECK(fillColor == "cecece");
 		}

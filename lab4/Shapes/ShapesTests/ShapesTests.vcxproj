@@ -167,6 +167,7 @@
     <ClCompile Include="..\Shapes\ConsoleCommand.cpp" />
     <ClCompile Include="..\Shapes\LineSegment.cpp" />
     <ClCompile Include="..\Shapes\Point.cpp" />
+    <ClCompile Include="..\Shapes\Rectangle.cpp" />
     <ClCompile Include="..\Shapes\Shape.cpp" />
     <ClCompile Include="..\Shapes\SolidShape.cpp" />
     <ClCompile Include="..\Shapes\Triangle.cpp" />

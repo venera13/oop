@@ -1,9 +1,10 @@
 #include "ConsoleCommand.h"
 #include "LineSegment.h"
-#include "Triangle.h"
 #include "Point.h"
-#include "SolidShape.h"
 #include "Shape.h"
+#include "SolidShape.h"
+#include "Triangle.h"
+#include "Rectangle.h"
 
 void CConsoleCommand::DoCommand(string const& commandLine)
 {
@@ -19,5 +20,10 @@ void CConsoleCommand::DoCommand(string const& commandLine)
 	{
 		CTriangle triangle(CPoint(stod(command[1]), stod(command[2])), CPoint(stod(command[3]), stod(command[4])), CPoint(stod(command[5]), stod(command[6])), command[7], command[8]);
 		cout << triangle.ToString();
+	}
+	else if (command[0] == "Rectangle" && command.size() == 7)
+	{
+		CRectangle rectangle(CPoint(stod(command[1]), stod(command[2])), stod(command[3]), stod(command[4]), command[5], command[6]);
+		cout << rectangle.ToString();
 	}
 }
