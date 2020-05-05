@@ -5,10 +5,6 @@ CRectangle::CRectangle(CPoint const& leftTopPoint, double const& width, double c
 	, m_width(width)
 	, m_height(height)
 {
-	if (width < 0 || height < 0)
-	{
-		throw invalid_argument("Rectable width and height cannot be negative");
-	}
 	SetOutlineColor(outlineColor);
 	SetFillColor(fillColor);
 }

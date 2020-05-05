@@ -17,6 +17,8 @@ public:
 	~CConsoleCommand() = default;
 
 	void DoCommand(istream& commands);
+	string GetInfoShapeWithMaxArea();
+	string GetInfoShapeWithMinPerimeter();
 
 private:
 	vector<unique_ptr<IShape>> m_shapes;

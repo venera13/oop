@@ -22,7 +22,7 @@ unique_ptr<CShape> CreateLineSegment(vector<string> command)
 	}
 	else
 	{
-		throw invalid_argument("Uncorrect number of arguments");
+		throw invalid_argument("Incorrect number of arguments");
 	}
 }
 
@@ -41,7 +41,7 @@ unique_ptr<CShape> CreateTriangle(vector<string> command)
 	}
 	else
 	{
-		throw invalid_argument("Uncorrect number of arguments");
+		throw invalid_argument("Incorrect number of arguments");
 	}
 }
 
@@ -60,7 +60,7 @@ unique_ptr<CShape> CreateRectangle(vector<string> command)
 	}
 	else
 	{
-		throw invalid_argument("Uncorrect number of arguments");
+		throw invalid_argument("Incorrect number of arguments");
 	}
 }
 
@@ -79,7 +79,7 @@ unique_ptr<CShape> CreateCircle(vector<string> command)
 	}
 	else
 	{
-		throw invalid_argument("Uncorrect number of arguments");
+		throw invalid_argument("Incorrect number of arguments");
 	}
 }
 
@@ -95,15 +95,14 @@ bool PerimeterCompare(unique_ptr<IShape> const& firstShape, unique_ptr<IShape> c
 
 void CConsoleCommand::DoCommand(istream& commands)
 {
-	try
+
+	string commandLine;
+	vector<string> command;
+	while (getline(commands, commandLine))
 	{
-		while (!commands.eof())
+		try
 		{
-			string commandLine;
-			getline(commands, commandLine);
-			vector<string> command;
 			boost::split(command, commandLine, is_any_of(" "), token_compress_on);
-			cout << command[0] << endl;
 
 			if (command[0] == "LineSegment")
 			{
@@ -123,21 +122,34 @@ void CConsoleCommand::DoCommand(istream& commands)
 			}
 			else
 			{
-				throw invalid_argument("Uncorrect shape");
+				throw invalid_argument("Incorrect shape");
 			}
 		}
-		cout << "1\n";
-		if (!m_shapes.empty())
+		catch (invalid_argument const& e)
 		{
-			cout << "2\n";
-			auto shapeWithMaxArea = max_element(m_shapes.begin(), m_shapes.end(), AreaCompare);
-			(*shapeWithMaxArea)->ToString();
-			auto shapeWithMinPerimeter = min_element(m_shapes.begin(), m_shapes.end(), PerimeterCompare);
-			(*shapeWithMinPerimeter)->ToString();
+			cout << e.what() << endl;
 		}
 	}
-	catch (invalid_argument const& e)
+}
+
+string CConsoleCommand::GetInfoShapeWithMaxArea()
+{
+	string result;
+	if (!m_shapes.empty())
 	{
-		cout << e.what() << endl;
+		auto shapeWithMaxArea = max_element(m_shapes.begin(), m_shapes.end(), AreaCompare);
+		result = (*shapeWithMaxArea)->ToString();
 	}
+	return result;
+}
+
+string CConsoleCommand::GetInfoShapeWithMinPerimeter()
+{
+	string result;
+	if (!m_shapes.empty())
+	{
+		auto shapeWithMinPerimeter = min_element(m_shapes.begin(), m_shapes.end(), PerimeterCompare);
+		result = (*shapeWithMinPerimeter)->ToString();
+	}
+	return result;
 }

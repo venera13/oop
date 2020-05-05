@@ -3,13 +3,11 @@
 int main()
 {
 	CConsoleCommand consoleCommand;
-	try
-	{
-		consoleCommand.DoCommand(cin);
-	}
-	catch (invalid_argument const& e)
-	{
-		cout << e.what() << endl;
-	}
+	consoleCommand.DoCommand(cin);
+	cout << "Shape with max area:\n";
+	cout << consoleCommand.GetInfoShapeWithMaxArea();
+	cout << "Shape with min perimeter:\n";
+	cout << consoleCommand.GetInfoShapeWithMinPerimeter();
+
 	return false;
 }

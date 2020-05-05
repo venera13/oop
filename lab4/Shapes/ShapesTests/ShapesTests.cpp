@@ -1,13 +1,17 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <iomanip>
 #include <iostream>
+
 #define CATCH_CONFIG_MAIN
 #include "../../../catch/catch.hpp"
 
-#include "../Shapes/ConsoleCommand.h"
 #include "../Shapes/Circle.h"
-#include "../Shapes/Rectangle.h"
-#include "../Shapes/Triangle.h"
+#include "../Shapes/ConsoleCommand.h"
 #include "../Shapes/LineSegment.h"
 #include "../Shapes/Point.h"
+#include "../Shapes/Rectangle.h"
+#include "../Shapes/Triangle.h"
 
 SCENARIO("Line segment")
 {
@@ -124,6 +128,62 @@ SCENARIO("Circle")
 			CHECK(perimeter == testPerimeter);
 			CHECK(outlineColor == "ff00ff");
 			CHECK(fillColor == "cecece");
+		}
+	}
+}
+
+SCENARIO("Console command")
+{
+	WHEN("get shape with max area")
+	{
+		stringstream input;
+		input << "Triangle 1.0 1.0 1.0 7.0 9.0 1.0 ffffff 656565\n";
+		input << "LineSegment 5.0 1.0 15.0 .10 ff00ff\n";
+		input << "Rectangle 1.0 4.0 4 3 ff00ff cecece\n";
+		input << "Circle 4.0 1.0 5 ffffff 656565\n^Z";
+
+		stringstream shapeInfoTest;
+		shapeInfoTest << "Name: circle;\n";
+		shapeInfoTest << "Center point: 4, 1;\n";
+		shapeInfoTest << "Radius: 5;\n";
+		shapeInfoTest << "Area: 78.5398;\n";
+		shapeInfoTest << "Perimeter: 31.4159;\n";
+		shapeInfoTest << "Outline color: ffffff;\n";
+		shapeInfoTest << "Fill color: 656565;\n";
+
+		THEN("correct shape with max area")
+		{
+			CConsoleCommand consoleCommand;
+			consoleCommand.DoCommand(input);
+			auto shapeWithMaxAreaInfo = consoleCommand.GetInfoShapeWithMaxArea();
+
+			CHECK(shapeWithMaxAreaInfo == shapeInfoTest.str());
+		}
+	}
+
+	WHEN("get shape with min perimeter")
+	{
+		stringstream input;
+		input << "Triangle 1.0 1.0 1.0 7.0 9.0 1.0 ffffff 656565\n";
+		input << "LineSegment 5.0 1.0 15.0 .10 ff00ff\n";
+		input << "Rectangle 1.0 4.0 4 3 ff00ff cecece\n";
+		input << "Circle 4.0 1.0 5 ffffff 656565\n^Z";
+
+		stringstream shapeInfoTest;
+		shapeInfoTest << "Name: line segment;\n";
+		shapeInfoTest << "Start point: 5, 1;\n";
+		shapeInfoTest << "End point: 15, 0.1;\n";
+		shapeInfoTest << "Area: 0;\n";
+		shapeInfoTest << "Perimeter: 10.0404;\n";
+		shapeInfoTest << "Outline color: ff00ff;\n";
+
+		THEN("correct shapes with min perimeter area")
+		{
+			CConsoleCommand consoleCommand;
+			consoleCommand.DoCommand(input);
+			auto shapeWithMinPerimeterInfo = consoleCommand.GetInfoShapeWithMinPerimeter();
+
+			CHECK(shapeWithMinPerimeterInfo == shapeInfoTest.str());
 		}
 	}
 }

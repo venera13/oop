@@ -4,10 +4,6 @@ CCircle::CCircle(CPoint const& centerPoint, double const& radius, string const& 
 	: m_center(centerPoint)
 	, m_radius(radius)
 {
-	if (radius < 0)
-	{
-		throw invalid_argument("Circle radius cannot be negative");
-	}
 	SetOutlineColor(outlineColor);
 	SetFillColor(fillColor);
 }
