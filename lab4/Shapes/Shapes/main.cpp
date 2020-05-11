@@ -7,10 +7,12 @@ int main()
 {
 	CConsoleCommand consoleCommand;
 	consoleCommand.DoCommand(cin);
+	auto shapeWithMaxArea = consoleCommand.GetShapeWithMaxArea();
+	auto shapeWithMinPerimeter = consoleCommand.GetShapeWithMinPerimeter();
 	cout << "Shape with max area:\n";
-	cout << consoleCommand.GetInfoShapeWithMaxArea();
+	cout << consoleCommand.GetShapeInfo(shapeWithMaxArea);
 	cout << "Shape with min perimeter:\n";
-	cout << consoleCommand.GetInfoShapeWithMinPerimeter();
+	cout << consoleCommand.GetShapeInfo(shapeWithMinPerimeter);
 
 	return false;
 }

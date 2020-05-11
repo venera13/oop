@@ -155,7 +155,8 @@ SCENARIO("Console command")
 		{
 			CConsoleCommand consoleCommand;
 			consoleCommand.DoCommand(input);
-			auto shapeWithMaxAreaInfo = consoleCommand.GetInfoShapeWithMaxArea();
+			auto shapeWithMaxArea = consoleCommand.GetShapeWithMaxArea();
+			auto shapeWithMaxAreaInfo = consoleCommand.GetShapeInfo(shapeWithMaxArea);
 
 			CHECK(shapeWithMaxAreaInfo == shapeInfoTest.str());
 		}
@@ -181,7 +182,8 @@ SCENARIO("Console command")
 		{
 			CConsoleCommand consoleCommand;
 			consoleCommand.DoCommand(input);
-			auto shapeWithMinPerimeterInfo = consoleCommand.GetInfoShapeWithMinPerimeter();
+			auto shapeWithMinPerimeter = consoleCommand.GetShapeWithMinPerimeter();
+			auto shapeWithMinPerimeterInfo = consoleCommand.GetShapeInfo(shapeWithMinPerimeter);
 
 			CHECK(shapeWithMinPerimeterInfo == shapeInfoTest.str());
 		}

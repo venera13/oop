@@ -9,8 +9,9 @@ public:
 	~CConsoleCommand() = default;
 
 	void DoCommand(istream& commands);
-	string GetInfoShapeWithMaxArea() const;
-	string GetInfoShapeWithMinPerimeter() const;
+	vector<unique_ptr<IShape>>::const_iterator GetShapeWithMaxArea() const;
+	vector<unique_ptr<IShape>>::const_iterator GetShapeWithMinPerimeter() const;
+	string GetShapeInfo(vector<unique_ptr<IShape>>::const_iterator shape) const;
 
 private:
 	vector<unique_ptr<IShape>> m_shapes;

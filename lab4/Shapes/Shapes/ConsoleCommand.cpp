@@ -136,24 +136,27 @@ void CConsoleCommand::DoCommand(istream& commands)
 	}
 }
 
-string CConsoleCommand::GetInfoShapeWithMaxArea() const
+vector<unique_ptr<IShape>>::const_iterator CConsoleCommand::GetShapeWithMaxArea() const
 {
-	string result;
 	if (!m_shapes.empty())
 	{
-		auto shapeWithMaxArea = max_element(m_shapes.begin(), m_shapes.end(), AreaCompare);
-		result = (*shapeWithMaxArea)->ToString();
+		return max_element(m_shapes.begin(), m_shapes.end(), AreaCompare);
 	}
-	return result;
+	return m_shapes.end();
 }
 
-string CConsoleCommand::GetInfoShapeWithMinPerimeter() const
+vector<unique_ptr<IShape>>::const_iterator CConsoleCommand::GetShapeWithMinPerimeter() const
 {
-	string result;
 	if (!m_shapes.empty())
 	{
-		auto shapeWithMinPerimeter = min_element(m_shapes.begin(), m_shapes.end(), PerimeterCompare);
-		result = (*shapeWithMinPerimeter)->ToString();
+		return min_element(m_shapes.begin(), m_shapes.end(), PerimeterCompare);
 	}
+	return m_shapes.end();
+}
+
+string CConsoleCommand::GetShapeInfo(vector<unique_ptr<IShape>>::const_iterator shape) const
+{
+	string result;
+	result = (*shape)->ToString();
 	return result;
 }
