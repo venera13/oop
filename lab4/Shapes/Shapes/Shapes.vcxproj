@@ -171,6 +171,7 @@
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="SolidShape.h" />
+    <ClInclude Include="stdafx.h" />
     <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <ItemGroup>

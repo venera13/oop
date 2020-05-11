@@ -1,4 +1,8 @@
 #include "Circle.h"
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
 
 CCircle::CCircle(CPoint const& centerPoint, double const& radius, string const& outlineColor, string const& fillColor)
 	: m_center(centerPoint)

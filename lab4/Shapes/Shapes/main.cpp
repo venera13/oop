@@ -1,4 +1,7 @@
+#include "stdafx.h"
 #include "ConsoleCommand.h"
+
+using namespace std;
 
 int main()
 {

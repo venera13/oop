@@ -3,12 +3,6 @@
 
 #include "Point.h"
 #include "SolidShape.h"
-#include <iostream>
-#include <sstream>
-#include <cmath>
-#include <iomanip>
-
-using namespace std;
 
 class CCircle final : public CSolidShape
 {

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "ConsoleCommand.h"
 #include "Circle.h"
 #include "LineSegment.h"
@@ -6,6 +7,9 @@
 #include "Shape.h"
 #include "SolidShape.h"
 #include "Triangle.h"
+
+using namespace std;
+using namespace boost;
 
 unique_ptr<CShape> CreateLineSegment(vector<string> command)
 {
@@ -132,7 +136,7 @@ void CConsoleCommand::DoCommand(istream& commands)
 	}
 }
 
-string CConsoleCommand::GetInfoShapeWithMaxArea()
+string CConsoleCommand::GetInfoShapeWithMaxArea() const
 {
 	string result;
 	if (!m_shapes.empty())
@@ -143,7 +147,7 @@ string CConsoleCommand::GetInfoShapeWithMaxArea()
 	return result;
 }
 
-string CConsoleCommand::GetInfoShapeWithMinPerimeter()
+string CConsoleCommand::GetInfoShapeWithMinPerimeter() const
 {
 	string result;
 	if (!m_shapes.empty())

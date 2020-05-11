@@ -1,21 +1,10 @@
 #pragma once
 #include "Point.h"
-
-#include "math.h"
 #include <string>
-
-using namespace std;
-
-struct Point
-{
-	double x;
-	double y;
-};
 
 class IShape
 {
 public:
-	IShape() = default;
 	virtual ~IShape() = default;
 
 	virtual double GetArea() const = 0;
