@@ -1,5 +1,7 @@
 #include "SolidShape.h"
 
+using namespace std;
+
 void CSolidShape::SetFillColor(string const& color)
 {
 	m_fillColor = color;

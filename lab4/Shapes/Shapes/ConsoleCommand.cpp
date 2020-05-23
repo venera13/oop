@@ -7,6 +7,7 @@
 #include "Shape.h"
 #include "SolidShape.h"
 #include "Triangle.h"
+#include "Canvas.h"
 
 using namespace std;
 using namespace boost;
@@ -159,4 +160,29 @@ string CConsoleCommand::GetShapeInfo(vector<unique_ptr<IShape>>::const_iterator 
 	string result;
 	result = (*shape)->ToString();
 	return result;
+}
+
+void CConsoleCommand::DrawShapes() const
+{
+	sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
+	CCanvas canvas(window);
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				window.close();
+			}
+				
+		}
+		window.clear(sf::Color(255, 255, 255));
+
+		for (const auto& shape : m_shapes)
+		{
+			shape->Draw(canvas);
+		}
+		window.display();
+	}
 }

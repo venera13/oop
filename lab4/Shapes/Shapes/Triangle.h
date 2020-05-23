@@ -4,17 +4,17 @@
 #include <iostream>
 #include <sstream>
 
-using namespace std;
 
 class CTriangle final : public CSolidShape
 {
 public:
-	CTriangle(CPoint const& vertex1, CPoint const& vertex2, CPoint const& vertex3, string const& outlineColor, string const& fillColor);
+	CTriangle(CPoint const& vertex1, CPoint const& vertex2, CPoint const& vertex3, std::string const& outlineColor, std::string const& fillColor);
 	~CTriangle() = default;
 
 	double GetArea() const override;
 	double GetPerimeter() const override;
-	string ToString() const override;
+	std::string ToString() const override;
+	void Draw(ICanvas& canvas) const override;
 
 	CPoint GetVertex1() const;
 	CPoint GetVertex2() const;

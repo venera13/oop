@@ -13,6 +13,8 @@
 #include "../Shapes/Rectangle.h"
 #include "../Shapes/Triangle.h"
 
+using namespace std;
+
 SCENARIO("Line segment")
 {
 	WHEN("create line segment")

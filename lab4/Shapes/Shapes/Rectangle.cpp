@@ -1,5 +1,7 @@
 #include "Rectangle.h"
 
+using namespace std;
+
 CRectangle::CRectangle(CPoint const& leftTopPoint, double const& width, double const& height, string const& outlineColor, string const& fillColor)
 	: m_leftTopPoint(leftTopPoint)
 	, m_width(width)
@@ -33,6 +35,18 @@ string CRectangle::ToString() const
 		 << "Outline color: " << GetOutlineColor() << ";\n"
 		 << "Fill color: " << GetFillColor() << ";" << endl;
 	return info.str();
+}
+
+void CRectangle::Draw(ICanvas& canvas) const
+{
+	CPoint rightBottomPoint = GetRightBottomPoint();
+	std::vector<CPoint> points = {
+		{ m_leftTopPoint.x(), m_leftTopPoint.y() },
+		{ m_leftTopPoint.x() + m_width, m_leftTopPoint.y() },
+		{ rightBottomPoint.x(), rightBottomPoint.y() },
+		{ m_leftTopPoint.x(), m_leftTopPoint.y() - m_height }
+	};
+	canvas.DrawFillPoligon(points, GetOutlineColor(), GetFillColor());
 }
 
 CPoint CRectangle::GetLeftTopPoint() const

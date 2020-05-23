@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 
+using namespace std;
+
 CCircle::CCircle(CPoint const& centerPoint, double const& radius, string const& outlineColor, string const& fillColor)
 	: m_center(centerPoint)
 	, m_radius(radius)
@@ -33,6 +35,11 @@ string CCircle::ToString() const
 		 << "Outline color: " << GetOutlineColor() << ";\n"
 		 << "Fill color: " << GetFillColor() << ";" << endl;
 	return info.str();
+}
+
+void CCircle::Draw(ICanvas& canvas) const
+{
+	canvas.DrawCircle(m_center, m_radius, GetOutlineColor(), GetFillColor());
 }
 
 CPoint CCircle::GetCenter() const

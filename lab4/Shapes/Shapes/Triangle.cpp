@@ -1,5 +1,7 @@
 #include "Triangle.h"
 
+using namespace std;
+
 CTriangle::CTriangle(CPoint const& vertex1, CPoint const& vertex2, CPoint const& vertex3, string const& outlineColor, string const& fillColor)
 	: m_vertex1(vertex1)
 	, m_vertex2(vertex2)
@@ -37,6 +39,16 @@ string CTriangle::ToString() const
 		 << "Outline color: " << GetOutlineColor() << ";\n"
 		 << "Fill color: " << GetFillColor() << ";" << endl;
 	return info.str();
+}
+
+void CTriangle::Draw(ICanvas& canvas) const
+{
+	std::vector<CPoint> points = {
+		{ m_vertex1.x(), m_vertex1.y() },
+		{ m_vertex2.x(), m_vertex2.y() },
+		{ m_vertex3.x(), m_vertex3.y() }
+	};
+	canvas.DrawFillPoligon(points, GetOutlineColor(), GetFillColor());
 }
 
 CPoint CTriangle::GetVertex1() const

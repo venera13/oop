@@ -9,12 +9,12 @@ public:
 	CSolidShape() = default;
 	virtual ~CSolidShape() = default;
 
-	void SetFillColor(string const& color) override;
-	string GetFillColor() const;
+	void SetFillColor(std::string const& color) override;
+	std::string GetFillColor() const;
 
-	void SetOutlineColor(string const& color) override;
-	string GetOutlineColor() const;
+	void SetOutlineColor(std::string const& color) override;
+	std::string GetOutlineColor() const;
 
 private:
-	string m_fillColor = "000000";
+	std::string m_fillColor = "000000";
 };

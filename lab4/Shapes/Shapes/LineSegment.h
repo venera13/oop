@@ -4,17 +4,16 @@
 #include "Shape.h"
 #include "Point.h"
 
-using namespace std;
-
 class CLineSegment final : public CShape
 {
 public:
-	CLineSegment(CPoint const& startPoint, CPoint const& endPoint, string const& color);
+	CLineSegment(CPoint const& startPoint, CPoint const& endPoint, std::string const& color);
 	~CLineSegment() = default;
 
 	double GetArea() const override;
 	double GetPerimeter() const override;
-	string ToString() const override;
+	std::string ToString() const override;
+	void Draw(ICanvas& canvas) const override;
 
 	CPoint GetStartPoint() const;
 	CPoint GetEndPoint() const;

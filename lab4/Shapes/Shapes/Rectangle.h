@@ -4,17 +4,16 @@
 #include <iostream>
 #include <sstream>
 
-using namespace std;
-
 class CRectangle final : public CSolidShape
 {
 public:
-	CRectangle(CPoint const& leftTopPoint, double const& width, double const& height, string const& outlineColor, string const& fillColor);
+	CRectangle(CPoint const& leftTopPoint, double const& width, double const& height, std::string const& outlineColor, std::string const& fillColor);
 	~CRectangle() = default;
 
 	double GetArea() const override;
 	double GetPerimeter() const override;
-	string ToString() const override;
+	std::string ToString() const override;
+	void Draw(ICanvas& canvas) const override;
 
 	CPoint GetLeftTopPoint() const;
 	CPoint GetRightBottomPoint() const;

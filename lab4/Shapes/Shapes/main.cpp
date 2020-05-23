@@ -13,6 +13,7 @@ int main()
 	cout << consoleCommand.GetShapeInfo(shapeWithMaxArea);
 	cout << "Shape with min perimeter:\n";
 	cout << consoleCommand.GetShapeInfo(shapeWithMinPerimeter);
+	consoleCommand.DrawShapes();
 
 	return false;
 }

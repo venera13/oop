@@ -1,5 +1,7 @@
 #include "LineSegment.h"
 
+using namespace std;
+
 CLineSegment::CLineSegment(CPoint const& startPoint, CPoint const& endPoint, string const& color)
 	: m_startPoint(startPoint)
 	, m_endPoint(endPoint)
@@ -27,6 +29,11 @@ string CLineSegment::ToString() const
 		 << "Perimeter: " << GetPerimeter() << ";\n"
 		 << "Outline color: " << GetOutlineColor() << ";" << endl;
 	return info.str();
+}
+
+void CLineSegment::Draw(ICanvas& canvas) const
+{
+	canvas.DrawLine(m_startPoint, m_endPoint, GetOutlineColor());
 }
 
 CPoint CLineSegment::GetStartPoint() const

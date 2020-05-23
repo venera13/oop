@@ -7,12 +7,13 @@
 class CCircle final : public CSolidShape
 {
 public:
-	CCircle(CPoint const& centerPoint, double const& radius, string const& outlineColor, string const& fillColor);
+	CCircle(CPoint const& centerPoint, double const& radius, std::string const& outlineColor, std::string const& fillColor);
 	~CCircle() = default;
 
 	double GetArea() const override;
 	double GetPerimeter() const override;
-	string ToString() const override;
+	std::string ToString() const override;
+	void Draw(ICanvas& canvas) const override;
 
 	CPoint GetCenter() const;
 	double GetRadius() const;
