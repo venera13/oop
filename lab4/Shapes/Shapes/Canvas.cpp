@@ -3,21 +3,12 @@
 
 using namespace std;
 
-sf::Color GetValidateColor(std::string color) 
+sf::Color GetValidateColor(uint32_t color)
 {
-	if (color.length() != 6)
-	{
-		cout << "Incorrect color";
-		return sf::Color(0, 0, 0);
-	}
-	else
-	{
-		uint32_t newColor = stoi(color);
-		uint32_t red = ((newColor / 256) / 256) % 256;
-		uint32_t green = (newColor / 256) % 256;
-		uint32_t blue = newColor % 256;
-		return sf::Color(red, green, blue);
-	}
+	uint32_t red = ((color / 256) / 256) % 256;
+	uint32_t green = (color / 256) % 256;
+	uint32_t blue = color % 256;
+	return sf::Color(red, green, blue);
 }
 
 CCanvas::CCanvas(sf::RenderWindow& window)
@@ -25,18 +16,19 @@ CCanvas::CCanvas(sf::RenderWindow& window)
 {
 }
 
-void CCanvas::DrawLine(CPoint const& startPoint, CPoint const& endPoint, std::string const& lineColor) const
+void CCanvas::DrawLine(CPoint const& startPoint, CPoint const& endPoint, uint32_t const& lineColor) const
 {
 	sf::Vertex line[] = 
 	{
 		sf::Vertex(sf::Vector2f((float)startPoint.x(), (float)startPoint.y())),
 		sf::Vertex(sf::Vector2f((float)endPoint.x(), (float)endPoint.y()))
 	};
-	line->color = GetValidateColor(lineColor);
+	line[0].color = GetValidateColor(lineColor);
+	line[1].color = GetValidateColor(lineColor);
 	m_window.draw(line, 2, sf::Lines);
 }
 
-void CCanvas::DrawFillPoligon(std::vector<CPoint> const& points, std::string const& outlineColor, std::string const& fillColor) const
+void CCanvas::DrawFillPoligon(std::vector<CPoint> const& points, uint32_t const& outlineColor, uint32_t const& fillColor) const
 {
 	sf::ConvexShape shape;
 	shape.setPointCount(points.size());
@@ -45,18 +37,18 @@ void CCanvas::DrawFillPoligon(std::vector<CPoint> const& points, std::string con
 		shape.setPoint(i, sf::Vector2f((float)points[i].x(), (float)points[i].y()));
 	}
 	shape.setFillColor(GetValidateColor(fillColor));
-	shape.setOutlineThickness(3);
+	shape.setOutlineThickness(1);
 	shape.setOutlineColor(GetValidateColor(outlineColor));
 	m_window.draw(shape);
 }
 
-void CCanvas::DrawCircle(CPoint const& center, double const& radius, std::string const& outlineColor, std::string const& fillColor) const
+void CCanvas::DrawCircle(CPoint const& center, double const& radius, uint32_t const& outlineColor, uint32_t const& fillColor) const
 {
-	sf::CircleShape circle(radius);
+	sf::CircleShape circle((float)radius);
 	circle.setFillColor(GetValidateColor(fillColor));
-	circle.setOutlineThickness(3);
+	circle.setOutlineThickness(1);
 	circle.setOutlineColor(GetValidateColor(outlineColor));
-	circle.move((float)center.x(), (float)center.y());
+	circle.move((float)(center.x() - radius), (float)(center.y() - radius));
 	m_window.draw(circle);
 }
 

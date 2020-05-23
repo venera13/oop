@@ -2,13 +2,13 @@
 
 using namespace std;
 
-CRectangle::CRectangle(CPoint const& leftTopPoint, double const& width, double const& height, string const& outlineColor, string const& fillColor)
+CRectangle::CRectangle(CPoint const& leftTopPoint, double const& width, double const& height, std::string const& outlineColor, std::string const& fillColor)
 	: m_leftTopPoint(leftTopPoint)
 	, m_width(width)
 	, m_height(height)
 {
-	SetOutlineColor(outlineColor);
-	SetFillColor(fillColor);
+	SetOutlineColor(stoul(outlineColor, 0, 16));
+	SetFillColor(stoul(fillColor, 0, 16));
 }
 
 double CRectangle::GetArea() const
@@ -44,7 +44,7 @@ void CRectangle::Draw(ICanvas& canvas) const
 		{ m_leftTopPoint.x(), m_leftTopPoint.y() },
 		{ m_leftTopPoint.x() + m_width, m_leftTopPoint.y() },
 		{ rightBottomPoint.x(), rightBottomPoint.y() },
-		{ m_leftTopPoint.x(), m_leftTopPoint.y() - m_height }
+		{ m_leftTopPoint.x(), m_leftTopPoint.y() + m_height }
 	};
 	canvas.DrawFillPoligon(points, GetOutlineColor(), GetFillColor());
 }
@@ -56,7 +56,7 @@ CPoint CRectangle::GetLeftTopPoint() const
 
 CPoint CRectangle::GetRightBottomPoint() const
 {
-	return CPoint(m_leftTopPoint.x() + m_width, m_leftTopPoint.y() - m_height);
+	return CPoint(m_leftTopPoint.x() + m_width, m_leftTopPoint.y() + m_height);
 }
 
 double CRectangle::GetWidth() const

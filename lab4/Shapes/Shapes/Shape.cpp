@@ -2,12 +2,12 @@
 
 using namespace std;
 
-void CShape::SetOutlineColor(string const& color)
+void CShape::SetOutlineColor(uint32_t const& color)
 {
 	m_outlineColor = color;
 }
 
-string CShape::GetOutlineColor() const
+uint32_t CShape::GetOutlineColor() const
 {
 	return m_outlineColor;
 }

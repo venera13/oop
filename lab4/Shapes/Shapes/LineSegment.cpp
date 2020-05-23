@@ -2,11 +2,11 @@
 
 using namespace std;
 
-CLineSegment::CLineSegment(CPoint const& startPoint, CPoint const& endPoint, string const& color)
+CLineSegment::CLineSegment(CPoint const& startPoint, CPoint const& endPoint, std::string const& color)
 	: m_startPoint(startPoint)
 	, m_endPoint(endPoint)
 {
-	SetOutlineColor(color);
+	SetOutlineColor(stoul(color, 0, 16));
 }
 
 double CLineSegment::GetArea() const

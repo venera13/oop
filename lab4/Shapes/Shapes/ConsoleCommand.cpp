@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ConsoleCommand.h"
+#include "Canvas.h"
 #include "Circle.h"
 #include "LineSegment.h"
 #include "Point.h"
@@ -7,7 +8,6 @@
 #include "Shape.h"
 #include "SolidShape.h"
 #include "Triangle.h"
-#include "Canvas.h"
 
 using namespace std;
 using namespace boost;
@@ -157,6 +157,10 @@ vector<unique_ptr<IShape>>::const_iterator CConsoleCommand::GetShapeWithMinPerim
 
 string CConsoleCommand::GetShapeInfo(vector<unique_ptr<IShape>>::const_iterator shape) const
 {
+	if (shape == m_shapes.end())
+	{
+		return "";
+	}
 	string result;
 	result = (*shape)->ToString();
 	return result;
@@ -164,25 +168,27 @@ string CConsoleCommand::GetShapeInfo(vector<unique_ptr<IShape>>::const_iterator 
 
 void CConsoleCommand::DrawShapes() const
 {
-	sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
-	CCanvas canvas(window);
-	while (window.isOpen())
+	if (!m_shapes.empty())
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
+		sf::RenderWindow window(sf::VideoMode(600, 600), "Draw Shapes!");
+		CCanvas canvas(window);
+		while (window.isOpen())
 		{
-			if (event.type == sf::Event::Closed)
+			sf::Event event;
+			while (window.pollEvent(event))
 			{
-				window.close();
+				if (event.type == sf::Event::Closed)
+				{
+					window.close();
+				}
 			}
-				
-		}
-		window.clear(sf::Color(255, 255, 255));
+			window.clear(sf::Color(255, 255, 255));
 
-		for (const auto& shape : m_shapes)
-		{
-			shape->Draw(canvas);
+			for (const auto& shape : m_shapes)
+			{
+				shape->Draw(canvas);
+			}
+			window.display();
 		}
-		window.display();
 	}
 }

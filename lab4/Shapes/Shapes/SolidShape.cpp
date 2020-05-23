@@ -2,22 +2,22 @@
 
 using namespace std;
 
-void CSolidShape::SetFillColor(string const& color)
+void CSolidShape::SetFillColor(uint32_t const& color)
 {
 	m_fillColor = color;
 }
 
-string CSolidShape::GetFillColor() const
+uint32_t CSolidShape::GetFillColor() const
 {
 	return m_fillColor;
 }
 
-void CSolidShape::SetOutlineColor(string const& color)
+void CSolidShape::SetOutlineColor(uint32_t const& color)
 {
 	CShape::SetOutlineColor(color);
 }
 
-string CSolidShape::GetOutlineColor() const
+uint32_t CSolidShape::GetOutlineColor() const
 {
 	return CShape::GetOutlineColor();
 }

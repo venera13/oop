@@ -6,12 +6,12 @@
 
 using namespace std;
 
-CCircle::CCircle(CPoint const& centerPoint, double const& radius, string const& outlineColor, string const& fillColor)
+CCircle::CCircle(CPoint const& centerPoint, double const& radius, std::string const& outlineColor, std::string const& fillColor)
 	: m_center(centerPoint)
 	, m_radius(radius)
 {
-	SetOutlineColor(outlineColor);
-	SetFillColor(fillColor);
+	SetOutlineColor(stoul(outlineColor, 0, 16));
+	SetFillColor(stoul(fillColor, 0, 16));
 }
 
 double CCircle::GetArea() const

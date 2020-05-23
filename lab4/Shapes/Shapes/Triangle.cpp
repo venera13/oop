@@ -2,13 +2,13 @@
 
 using namespace std;
 
-CTriangle::CTriangle(CPoint const& vertex1, CPoint const& vertex2, CPoint const& vertex3, string const& outlineColor, string const& fillColor)
+CTriangle::CTriangle(CPoint const& vertex1, CPoint const& vertex2, CPoint const& vertex3, std::string const& outlineColor, std::string const& fillColor)
 	: m_vertex1(vertex1)
 	, m_vertex2(vertex2)
 	, m_vertex3(vertex3)
 {
-	SetOutlineColor(outlineColor);
-	SetFillColor(fillColor);
+	SetOutlineColor(stoul(outlineColor, 0, 16));
+	SetFillColor(stoul(fillColor, 0, 16));
 }
 
 double CTriangle::GetArea() const
