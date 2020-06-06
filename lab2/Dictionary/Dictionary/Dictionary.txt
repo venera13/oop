@@ -1,5 +1,6 @@
-cat Кошка
+cat
 cat Кот
 ball мяч
 local локальный
 sun Солнце
+the red square Красная площадь

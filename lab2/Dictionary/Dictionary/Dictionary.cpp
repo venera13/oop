@@ -3,21 +3,62 @@
 
 const string INPUT_END_TEXT = "...";
 
+void deleteSpaces(string& string)
+{
+	size_t index;
+	size_t strBegin = string.find_first_not_of(' ');
+	size_t strEnd = string.find_last_not_of(' ');
+	while (((index = string.find(' ')) != std::string::npos) && (index < strBegin))
+	{
+		string.erase(index, 1);
+	}
+	while ((index = string.find(' ', strEnd)) != std::string::npos)
+	{
+		string.erase(index, 1);
+	}
+}
+
 multimap<string, string> GetDictionaryMap(string const& dictionaryFileName)
 {
 	multimap<string, string> resultMap;
 	string fileString;
 	ifstream dictionaryFile(dictionaryFileName);
+	regex translatableWordRegex("^[A-Za-z]+$");
+	regex translateRegex("^[Р-пр-џИЈ]+$");
 	while (getline(dictionaryFile, fileString))
 	{
 		vector<string> words;
 		boost::split(words, fileString, is_any_of(" "), token_compress_on);
-		int countEmptyElem = static_cast<int>(count_if(words.cbegin(), words.cend(), [](string word) { return word.empty(); }));
-		if (words.size() != 2 || countEmptyElem != 0)
+		string translatablePhrase, translatePhrase;
+		for (int i = 0; i < words.size(); i++)
+		{
+			string word = words[i];
+			if (word.empty())
+			{
+				break;
+			}
+			else if (regex_match(word, translatableWordRegex))
+			{
+				translatablePhrase += word;
+				translatablePhrase += ' ';
+			}
+			else if (regex_match(word, translateRegex))
+			{
+				translatePhrase += word;
+				translatePhrase += ' ';
+			}
+			else
+			{
+				break;
+			}
+		}
+		deleteSpaces(translatablePhrase);
+		deleteSpaces(translatePhrase);
+		if (translatablePhrase.empty() || translatePhrase.empty())
 		{
 			continue;
 		}
-		resultMap.insert(pair<string, string>(words[0], words[1]));
+		resultMap.insert(pair<string, string>(translatablePhrase, translatePhrase));
 	}
 
 	dictionaryFile.close();

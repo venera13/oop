@@ -21,7 +21,7 @@ SCENARIO("Check input streams")
 	WHEN("correct input stream")
 	{
 		int numberArguments = 2;
-		char args[][255] = { "C:\\projects\\study\\oop\\lab2\\Dictionary\\x64\\Debug\\Dictionary.exe", "Dictionary.txt" };
+		char args[][255] = { "Dictionary.exe", "Dictionary.txt" };
 		char* str[2];
 		str[0] = &args[0][0];
 		str[1] = &args[1][0];
@@ -36,7 +36,7 @@ SCENARIO("Check input streams")
 	WHEN("input file name is empty")
 	{
 		int numberArguments = 2;
-		char args[][255] = { "C:\\projects\\study\\oop\\lab2\\Dictionary\\x64\\Debug\\Dictionary.exe", "" };
+		char args[][255] = { "Dictionary.exe", "" };
 		char* str[2];
 		str[0] = &args[0][0];
 		str[1] = &args[1][0];
@@ -119,4 +119,20 @@ SCENARIO("Check dictionary program")
 			CHECK(output.str() == "Кот\nКот\n");
 		}
 	}
+	WHEN("input stream with phrase")
+	{
+		istringstream input("The Red Square\nCat\n...\nY\n");
+		ostringstream output;
+		string dictionaryFileName = "DictionaryForDialogTest.txt";
+
+		THEN("correct translations")
+		{
+			Dictionary dictionary;
+			dictionary.fileName = dictionaryFileName;
+			dictionary.map = { { "cat", "Кот" }, { "the red square", "Красная площадь" } };
+			DialogWithUser(input, output, dictionary);
+			CHECK(output.str() == "Красная площадь\nКот\n");
+		}
+	}
+
 }
