@@ -1,19 +1,5 @@
 #include "Rational.h"
 
-int GetGreatestCommonDivisor(int firstNumber, int secondNumber) 
-{
-	int result = 1;
-	for (int i = firstNumber; i > 0; i--)
-	{
-		if (firstNumber % i == 0 && secondNumber % i == 0)
-		{
-			result = i;
-			break;
-		}
-	}
-	return result;
-}
-
 CRational::CRational(int numerator, int denominator)
 {
 	if (denominator == 0)
@@ -100,7 +86,7 @@ CRational& CRational::operator/=(const CRational& rational)
 
 void CRational::NormalizeRational()
 {
-	int gcd = GetGreatestCommonDivisor(m_numerator, m_denominator);
+	int gcd = std::gcd(m_numerator, m_denominator);
 	m_numerator /= gcd;
 	m_denominator /= gcd;
 	if (m_denominator < 0)
