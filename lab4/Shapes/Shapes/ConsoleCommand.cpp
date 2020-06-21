@@ -100,7 +100,6 @@ bool PerimeterCompare(unique_ptr<IShape> const& firstShape, unique_ptr<IShape> c
 
 void CConsoleCommand::DoCommand(istream& commands)
 {
-
 	string commandLine;
 	vector<string> command;
 	while (getline(commands, commandLine))

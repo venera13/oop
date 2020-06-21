@@ -40,7 +40,7 @@ SCENARIO("Line segment")
 		}
 	}
 }
-/*
+
 SCENARIO("Triangle")
 {
 	WHEN("create triangle")
@@ -95,7 +95,7 @@ SCENARIO("Rectangle")
 			CHECK(leftTopPointX == 1.0);
 			CHECK(leftTopPointY == 4.0);
 			CHECK(rightBottomPointX == 5.0);
-			CHECK(rightBottomPointY == 1.0);
+			CHECK(rightBottomPointY == 7.0);
 			CHECK(width == 4.0);
 			CHECK(height == 3.0);
 			CHECK(area == 12);
@@ -128,8 +128,8 @@ SCENARIO("Circle")
 			CHECK(radius == 4.0);
 			CHECK(area == testArea);
 			CHECK(perimeter == testPerimeter);
-			CHECK(outlineColor == 0xff00ff);
-			CHECK(fillColor == 0xcecece);
+			CHECK(outlineColor == 16711935);
+			CHECK(fillColor == 13553358);
 		}
 	}
 }
@@ -150,8 +150,8 @@ SCENARIO("Console command")
 		shapeInfoTest << "Radius: 5;\n";
 		shapeInfoTest << "Area: 78.5398;\n";
 		shapeInfoTest << "Perimeter: 31.4159;\n";
-		shapeInfoTest << "Outline color: ffffff;\n";
-		shapeInfoTest << "Fill color: 656565;\n";
+		shapeInfoTest << "Outline color: 16777215;\n";
+		shapeInfoTest << "Fill color: 6645093;\n";
 
 		THEN("correct shape with max area")
 		{
@@ -178,7 +178,7 @@ SCENARIO("Console command")
 		shapeInfoTest << "End point: 15, 0.1;\n";
 		shapeInfoTest << "Area: 0;\n";
 		shapeInfoTest << "Perimeter: 10.0404;\n";
-		shapeInfoTest << "Outline color: ff00ff;\n";
+		shapeInfoTest << "Outline color: 16711935;\n";
 
 		THEN("correct shapes with min perimeter area")
 		{
@@ -190,4 +190,4 @@ SCENARIO("Console command")
 			CHECK(shapeWithMinPerimeterInfo == shapeInfoTest.str());
 		}
 	}
-}*/
+}

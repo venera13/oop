@@ -2,6 +2,7 @@
 #include "Shape.h"
 #include <boost/algorithm/string.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 class CConsoleCommand
 {
